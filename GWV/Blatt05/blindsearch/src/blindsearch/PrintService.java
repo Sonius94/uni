@@ -1,0 +1,70 @@
+package blindsearch;
+
+import java.util.ArrayList;
+
+public class PrintService {
+	public void printFieldStatus(Field field) {
+		System.out.println("The Maze:");
+		printField(field.getCharField());
+		printFrontshare(field.getFrontshare());
+	}
+	
+	public void printGoalPath(char[][] charField, Path goalPath) {
+		char[][] goalField = createMazeWithPath(charField, goalPath);
+		System.out.println("The Goal Maze:");
+		printField(goalField);
+		System.out.println();
+	}
+	
+	/*
+	 * Erstellt abhängig von einem Feld und einem Pfad ein neues Feld,
+	 * auf dem der Pfad eingezeichnet ist.
+	 */
+	private char[][] createMazeWithPath(char[][] charField, Path goalPath) {
+		char[][] fieldCopy = charField.clone();
+		for (int index = 1; index < goalPath.length() - 1; index++) {
+			Position position = goalPath.getPositionAtIndex(index);
+			Position oldPosition = goalPath.getPositionAtIndex(index - 1);
+			Position nextPosition = goalPath.getPositionAtIndex(index + 1);
+			
+			if (oldPosition.getX() == position.getX() && position.getX() == nextPosition.getX()) {
+				fieldCopy[position.getX()][position.getY()] = '\u2500';
+			}
+			else if (oldPosition.getY() == position.getY() && position.getY() == nextPosition.getY()) {
+				fieldCopy[position.getX()][position.getY()] = '\u2502';
+			}
+			else if ((position.getY() + 1 == nextPosition.getY() && position.getX() + 1 == oldPosition.getX()) ||
+					 (position.getY() + 1 == oldPosition.getY() && position.getX() + 1 == nextPosition.getX())) {
+				fieldCopy[position.getX()][position.getY()] = '\u250c';
+			}
+			else if ((position.getY() - 1 == nextPosition.getY() && position.getX() + 1 == oldPosition.getX()) ||
+					 (position.getY() - 1 == oldPosition.getY() && position.getX() + 1 == nextPosition.getX())) {
+				fieldCopy[position.getX()][position.getY()] = '\u2510';
+			}
+			else if ((position.getY() + 1 == nextPosition.getY() && position.getX() - 1 == oldPosition.getX()) ||
+					 (position.getY() + 1 == oldPosition.getY() && position.getX() - 1 == nextPosition.getX())) {
+				fieldCopy[position.getX()][position.getY()] = '\u2514';
+			}
+			else if ((position.getY() - 1 == nextPosition.getY() && position.getX() - 1 == oldPosition.getX()) ||
+					 (position.getY() - 1 == oldPosition.getY() && position.getX() - 1 == nextPosition.getX())) {
+				fieldCopy[position.getX()][position.getY()] = '\u2518';
+			}
+		}
+		return fieldCopy;
+	}
+
+	private void printField(char[][] charField) {
+		for (char[] c : charField) {
+			System.out.println(c);
+		}
+	}
+	
+	private void printFrontshare(ArrayList<Path> frontshare) {
+		System.out.println("The Frontshare:");
+		for (int index = 0; index < frontshare.size(); index++) {
+			System.out.print("Path " + Integer.toString(index) + ": ");
+			frontshare.get(index).printPath();
+			System.out.println();
+		}
+	}
+}
