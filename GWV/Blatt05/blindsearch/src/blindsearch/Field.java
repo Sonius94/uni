@@ -10,7 +10,7 @@ public class Field {
 	private char[][] charField;
 	private Position start;
 	private Position goal;
-	private ArrayList<Path> frontshare;
+	private ArrayList<Path> frontier;
 	private ArrayList<Portal> portals;
 	private PrintService printer;
 	
@@ -31,7 +31,7 @@ public class Field {
 	 * @return true, falls wir ein Ziel erreicht haben.
 	 */
 	public boolean checkPath(int index) {
-		Path pathToCheck = frontshare.remove(index);
+		Path pathToCheck = frontier.remove(index);
 		if (isPathAtGoal(pathToCheck)) { 
 			printGoalPath(pathToCheck);
 			
@@ -63,7 +63,7 @@ public class Field {
 		if (newPositionIsMoveable(position,oldPath)) {
 			Path path = new Path(oldPath, position);
 			path = usePortal(path);
-			frontshare.add(path);
+			frontier.add(path);
 		}
 	}
 	
@@ -146,9 +146,9 @@ public class Field {
 	}
 	
 	private void setStartFrontshare() {
-		frontshare = new ArrayList<>();
+		frontier = new ArrayList<>();
 		Path startPath = new Path(start);
-		frontshare.add(startPath);
+		frontier.add(startPath);
 	}
 	
 	private void setGoal() {
@@ -208,16 +208,15 @@ public class Field {
 	}
 	
 	public int getIndexOfLastPathInFrontshare() {
-		return frontshare.size() -1;
+		return frontier.size() -1;
 	}
 
 	public boolean isFrontshareEmpty() {
-		if (frontshare.size() == 0) { return true; }
-		return false;
+		return frontier.size() == 0;
 	}
 	
 	public ArrayList<Path> getFrontshare() {
-		return frontshare;
+		return frontier;
 	}
 	
 	public char[][] getCharField() {

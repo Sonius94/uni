@@ -16,6 +16,10 @@ public class PrintService {
 		System.out.println();
 	}
 	
+	public void printNoPathFound() {
+		System.out.println("There is no path found in this maze");
+	}
+	
 	/*
 	 * Erstellt abhängig von einem Feld und einem Pfad ein neues Feld,
 	 * auf dem der Pfad eingezeichnet ist.

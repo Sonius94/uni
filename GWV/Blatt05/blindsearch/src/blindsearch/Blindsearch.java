@@ -12,11 +12,9 @@ public class Blindsearch {
 	
 	public static void main(String[] args) {
 		Field field = new Field(createField());
-		BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch(field);
-		breadthFirstSearch.search();
-		
-		//DepthFirstSearch depthFirstSearch = new DepthFirstSearch(field);
-		//depthFirstSearch.search();
+		SearchService searchService = new SearchService(field);
+		searchService.breadthSearch();
+		// searchService.depthSearch();
 	}
 	
 	/*
