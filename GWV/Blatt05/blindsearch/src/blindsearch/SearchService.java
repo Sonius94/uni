@@ -30,6 +30,21 @@ public class SearchService {
 		printer.printNoPathFound();
 	}
 	
+	/*
+	 * Shouldnt be used on too big fields.
+	 */
+	public void findAllPaths() {
+		boolean pathFound = false;
+		while(!field.isFrontshareEmpty()) {
+			// Wir benutzen Tiefensuche, damit bei größeren Pfaden regelmäßig
+			// ein Pfad ausgegeben wird.
+			if (field.checkPath(field.getIndexOfLastPathInFrontier())) {
+				pathFound = true;
+			}
+		}
+		if (!pathFound) { printer.printNoPathFound(); }
+	}
+	
 	// TODO reduce code duplicate
 	// private void search() {}
 }

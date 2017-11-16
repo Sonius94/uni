@@ -8,14 +8,21 @@ import java.io.IOException;
  */
 public class Blindsearch {
 	// Datei-Name, der durchsucht werden soll.
-	private static String fileName = "blatt4_difference_maze.txt";
+	// private static String fileName = "blatt4_difference_maze.txt";
+	private static String fileName = "small_field.txt";
 	
 	public static void main(String[] args) {
 		Field field = new Field(createField());
 		SearchService searchService = new SearchService(field);
-		searchService.aStarSearch();
+		/*
+		 * Alle Suchen hintereinander ausführen würde dazu führen, dass 
+		 * die zweite Suche die abschließende Frontier der ersten Suche nutzt.
+		 * Daher muss man sich vorher überlegen, welche Suche man präferiert.
+		 */
 		//searchService.breadthSearch();
-		// searchService.depthSearch();
+		//searchService.depthSearch();
+		//searchService.aStarSearch();
+		searchService.findAllPaths();
 	}
 	
 	/*

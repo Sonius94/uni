@@ -132,6 +132,7 @@ public class Field {
 	
 	private void printGoalPath(Path goalPath) {
 		printer.printGoalPath(charField, goalPath);
+		goalPath.printPath();
 	}
 	
 	/*
