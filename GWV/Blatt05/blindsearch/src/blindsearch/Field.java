@@ -9,7 +9,7 @@ public class Field {
 	//Das Feld wird als zweidimensionales Array gespeichert.
 	private char[][] charField;
 	private Position start;
-	private Position goal;
+	private ArrayList<Position> goals;
 	private ArrayList<Path> frontier;
 	private ArrayList<Portal> portals;
 	private PrintService printer;
@@ -103,9 +103,11 @@ public class Field {
 	 */
 	private boolean isPathAtGoal(Path path) {
 		Position position = path.getHead();
-		if (position.getX() == goal.getX() && 
-				position.getY() == goal.getY()) { 
-			return true; 
+		for (Position goal : goals) {
+			if (position.getX() == goal.getX() && 
+					position.getY() == goal.getY()) { 
+				return true; 
+			}
 		}
 		return false;
 	}
@@ -138,7 +140,7 @@ public class Field {
 	 */
 	private void setStartStatus() {
 		setStart();
-		setGoal();
+		setGoals();
 		setStartFrontshare();
 		setPortals();
 		printer = new PrintService();
@@ -150,8 +152,16 @@ public class Field {
 		frontier.add(startPath);
 	}
 	
-	private void setGoal() {
-		goal = getPosition('g');
+	private void setGoals() {
+		setNextGoal(0,0);
+	}
+	
+	private void setNextGoal(int x, int y) {
+		Position nextGoal = getPositionFromIndex('g',x,y);
+		if (nextGoal != null) {
+			goals.add(nextGoal);
+			setNextGoal(nextGoal.getX(),nextGoal.getY());
+		}
 	}
 
 	private void setStart() {
@@ -210,7 +220,7 @@ public class Field {
 		return frontier.size() -1;
 	}
 	
-	public int getClosestPathToGoal() {
+	public int getClosestPathToGoal(Position goal) {
 		int indexOfCLosestPath = 0;
 		int closestDistance = getWidth() + getHeight();
 		for (int i = 0; i < frontier.size(); i++) {
@@ -236,5 +246,17 @@ public class Field {
 	
 	public char[][] getCharField() {
 		return charField;
+	}
+
+	public Position getClosestGoal() {
+		Position closestGoal = null;
+		int closestDistance = getWidth() + getHeight();
+		for (Position goal : goals) {
+			int goalDistance = start.getDistance(goal);
+			if (goalDistance < closestDistance) {
+				closestGoal = goal;
+			}
+		}
+		return closestGoal;
 	}
 }

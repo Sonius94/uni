@@ -24,8 +24,9 @@ public class SearchService {
 	}
 	
 	public void aStarSearch() {
+		Position goal = field.getClosestGoal();
 		while(!field.isFrontshareEmpty()) {
-			if (field.checkPath(field.getClosestPathToGoal())) { return; };
+			if (field.checkPath(field.getClosestPathToGoal(goal))) { return; };
 		}
 		printer.printNoPathFound();
 	}
