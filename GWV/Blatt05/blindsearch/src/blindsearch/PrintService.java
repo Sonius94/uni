@@ -1,6 +1,7 @@
 package blindsearch;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PrintService {
 	public void printFieldStatus(Field field) {
@@ -25,7 +26,7 @@ public class PrintService {
 	 * auf dem der Pfad eingezeichnet ist.
 	 */
 	private char[][] createMazeWithPath(char[][] charField, Path goalPath) {
-		char[][] fieldCopy = charField.clone();
+		char[][] fieldCopy = copyCharField(charField);
 		for (int index = 1; index < goalPath.length() - 1; index++) {
 			Position position = goalPath.getPositionAtIndex(index);
 			Position oldPosition = goalPath.getPositionAtIndex(index - 1);
@@ -55,6 +56,16 @@ public class PrintService {
 			}
 		}
 		return fieldCopy;
+	}
+
+	private char[][] copyCharField(char[][] charField) {
+		char[][] newCharField = new char[charField.length][charField[0].length];
+		for(int i = 0; i < charField.length; i++) {
+			for(int smallIndex = 0; smallIndex < charField[0].length; smallIndex++) {
+				newCharField[i][smallIndex] = charField[i][smallIndex];
+			}
+		}
+		return newCharField;
 	}
 
 	private void printField(char[][] charField) {

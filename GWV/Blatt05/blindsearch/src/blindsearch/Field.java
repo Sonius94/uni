@@ -34,7 +34,6 @@ public class Field {
 		Path pathToCheck = frontier.remove(index);
 		if (isPathAtGoal(pathToCheck)) { 
 			printGoalPath(pathToCheck);
-			
 			return true; 
 		}
 		addNewPathsToFrontshare(pathToCheck);
@@ -132,7 +131,6 @@ public class Field {
 	
 	private void printGoalPath(Path goalPath) {
 		printer.printGoalPath(charField, goalPath);
-		goalPath.printPath();
 	}
 	
 	/*
