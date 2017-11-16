@@ -207,8 +207,24 @@ public class Field {
 		return charField.length;
 	}
 	
-	public int getIndexOfLastPathInFrontshare() {
+	public int getIndexOfLastPathInFrontier() {
 		return frontier.size() -1;
+	}
+	
+	public int getClosestPathToGoal() {
+		int indexOfCLosestPath = 0;
+		int closestDistance = getWidth() + getHeight();
+		for (int i = 0; i < frontier.size(); i++) {
+			Path path = frontier.get(i);
+			Position head = path.getHead();
+			int distance = head.getDistance(goal);
+			// Bei gleicher distanz wird der zuerst gefundene gewöhlt
+			if (distance < closestDistance) {
+				closestDistance = distance;
+				indexOfCLosestPath = i;
+			}
+		}
+		return indexOfCLosestPath;
 	}
 
 	public boolean isFrontshareEmpty() {

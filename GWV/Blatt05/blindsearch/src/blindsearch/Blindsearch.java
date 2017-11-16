@@ -13,7 +13,8 @@ public class Blindsearch {
 	public static void main(String[] args) {
 		Field field = new Field(createField());
 		SearchService searchService = new SearchService(field);
-		searchService.breadthSearch();
+		searchService.aStarSearch();
+		//searchService.breadthSearch();
 		// searchService.depthSearch();
 	}
 	

@@ -11,7 +11,7 @@ public class SearchService {
 	
 	public void depthSearch() {
 		while(!field.isFrontshareEmpty()) {
-			if (field.checkPath(field.getIndexOfLastPathInFrontshare())) { return; };
+			if (field.checkPath(field.getIndexOfLastPathInFrontier())) { return; };
 		}
 		printer.printNoPathFound();
 	}
@@ -19,6 +19,13 @@ public class SearchService {
 	public void breadthSearch() {
 		while(!field.isFrontshareEmpty()) {
 			if (field.checkPath(0)) { return; };
+		}
+		printer.printNoPathFound();
+	}
+	
+	public void aStarSearch() {
+		while(!field.isFrontshareEmpty()) {
+			if (field.checkPath(field.getClosestPathToGoal())) { return; };
 		}
 		printer.printNoPathFound();
 	}

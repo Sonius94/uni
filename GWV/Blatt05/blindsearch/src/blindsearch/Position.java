@@ -49,4 +49,10 @@ public class Position {
 	public int getY() {
 		return y;
 	}
+
+	public int getDistance(Position toPoint) {
+		int xDistance = Math.abs(x - toPoint.x);
+		int yDistance = Math.abs(y - toPoint.y);
+		return xDistance + yDistance;
+	}
 }
