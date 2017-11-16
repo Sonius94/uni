@@ -23,6 +23,10 @@ public class SearchService {
 		printer.printNoPathFound();
 	}
 	
+	/*
+	 * Falls kein Pfad zum dichtesten Goal gefunden werden kann, wird dennoch weiter in
+	 * Abhängigkeit des dichtesten Pfades gesucht.
+	 */
 	public void aStarSearch() {
 		Position goal = field.getClosestGoal();
 		while(!field.isFrontshareEmpty()) {
@@ -45,7 +49,4 @@ public class SearchService {
 		}
 		if (!pathFound) { printer.printNoPathFound(); }
 	}
-	
-	// TODO reduce code duplicate
-	// private void search() {}
 }

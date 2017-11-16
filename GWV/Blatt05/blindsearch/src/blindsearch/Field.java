@@ -221,19 +221,18 @@ public class Field {
 	}
 	
 	public int getClosestPathToGoal(Position goal) {
-		int indexOfCLosestPath = 0;
+		int indexOfClosestPath = 0;
 		int closestDistance = getWidth() + getHeight();
 		for (int i = 0; i < frontier.size(); i++) {
-			Path path = frontier.get(i);
-			Position head = path.getHead();
+			Position head = frontier.get(i).getHead();
 			int distance = head.getDistance(goal);
 			// Bei gleicher distanz wird der zuerst gefundene gewöhlt
 			if (distance < closestDistance) {
 				closestDistance = distance;
-				indexOfCLosestPath = i;
+				indexOfClosestPath = i;
 			}
 		}
-		return indexOfCLosestPath;
+		return indexOfClosestPath;
 	}
 
 	public boolean isFrontshareEmpty() {
