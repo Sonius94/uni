@@ -1,0 +1,5 @@
+3.Unser programm würde erstmal einen Pfad suchen. Sobald er alle Möglichkeiten abgesucht hätte, würde er ausgeben, dass er keinen Pfad gefunden hat.
+
+4. Breitensuche: Die suche lastet die Memory Resourcen komplett aus. Die Zeit ist abhängig von der Größe des Labyrinths. Aber theoretisch dauert die Suche eher länger.
+Tiefensuche: Die schnellste Suche. Verbraucht nicht viel Arbeitspeicher.
+A*: Unterschiedlicher Verbrauch an Arbeitsspeicher und Geschwindigkeit. Bei vielen Hindernissen steigt sowohl Arbeitsspeicher, als auch Geschwindigkeit.

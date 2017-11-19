@@ -21,8 +21,8 @@ public class Blindsearch {
 		 */
 		//searchService.breadthSearch();
 		//searchService.depthSearch();
-		//searchService.aStarSearch();
-		searchService.findAllPaths();
+		searchService.aStarSearch();
+		//searchService.findAllPaths();
 	}
 	
 	/*
