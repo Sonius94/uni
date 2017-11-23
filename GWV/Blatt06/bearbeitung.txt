@@ -1,0 +1,17 @@
+1. (a) EIn Parser arbeitet mit Tripeln <S, I, A>. S ist dabei der Stack, I die Input-Liste und A die Verbindungen im Graphen. Folgende Operationen, können damit ausgeführt werden:
+- Left-Arc: Nimmt oberstes element (n) aus Stack. Zusätzlich wird eine Verbindung hinzugefügt, die vom obersten Element des Inputs (n') zu diesem führt (n'->n, bzw. A U {(n',n)}
+- Right-Arc: Nimmt oberstes Element aus dem Input (n') und legt dieses auf den Stack. Zusätzlich wird eine Verbindung hinzugefügt, die vom obersten Element des Stacks (n) zu diesem führt (n -> n', bzw. A U {(n,n')})
+- Reduce: Nimmt einfach oberstes Element vom Stack (Vorausgesetzt das Element hat ein Vater). Also <n|S,I,A> -> <S,I,A>.
+- Shift: Es wird das oberste Element des Inputs genommen und auf den Stack gelegt. Also <S,n|I,A> -> <n|S,I,A>
+(b) Der Parser terminiert, wenn die Input-Liste leer ist (<S,nil,A>), Der Inhalt von S uns A kann beliebig sein.
+(c) Ein Abhängigkeitsgraph sollte folgende Eigenschaften haben_
+- Single head: Der Graph hat einen Kopf, von dem aus sich der gesamte Baum aus entwickelt.
+- Acyclic: Der Baum hat keine Kreise. SObald im Graph zwei weitere Punkte verbunden werden, würde ein Kreis entstehen.
+- Connected: Alle Knoten im Graphen sind transitiv miteinander verbunden.
+- Projective: Ein Graph ist prejektiv, wenn jeder Knoten "graph adjacent" zum Graphen-kopf ist. Zwei Knoten sind "graph-adjacent", wenn jeder Knoten zwischen diesen zweien, von einem der zweien dominiert wird.
+(d)
+TODO Bäume in latex malen 
+- Single head: Baum basteln, in dem ein Knoten zwei Vaterknoten hat
+- Acyclic: zwei Knoten mit Pfeile in beide Richtungen (Kreis)
+- Connected: Einen Graphen malen, mit einem Punkt, der außerhalb liegt und kein Pfeil in oder aus ihn zeigt.
+- Projective: (although it does exlude yles of length greater than 2). Ich denk mal, dass wir einen Graphen malen, mit einem großen kreis  n -> n' -> n'' -> n oder so?
