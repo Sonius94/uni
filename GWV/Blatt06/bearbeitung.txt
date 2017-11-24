@@ -27,3 +27,35 @@ LA = Left-Arc, RA = Right-Arc, R = Reduce, S = Shift
 <eine isst, Giraffe, {(Mann,Der),(isst,Mann)} | LA
 <isst, Giraffe, {(Mann,Der),(isst,Mann),(Giraffe,eine)} | RA
 <Giraffe isst, nil, {(Mann,Der),(isst,Mann),(Giraffe,eine),(isst,Giraffe)} | Terminierung, da I = nil
+
+3.
+What are the search states?
+
+Wie gehen davon aus, dass wir die Suche mit exakt den gleichen Mitteln wie den Parser betreiben. Also einer Liste bzw. Stack, einer Liste bzw. String von übrigen Worten und eine Tupelliste als Knotenrelation.
+Also nach wie vor <S,I,A>.
+
+What is the start state?
+
+Genau wie beim Parser ist <nil,W,∅> der Startzustand.
+
+What are the end states?
+
+Enzustand ist <S,nil,A>, also genau wenn der gesamte String eingelesen wurde.
+
+What are the state transitions?
+
+Die Übergänge sind genau die 4 Möglichkeiten die der Parser hat. Left-Arc, Right-Arc, Reduce und Shift. Jeder Knoten in unseren Suchraum hat also 4 Kanten.
+
+Can the search space be created before the parsing starts?
+
+Da wir den String (W) kennen und auch alle 4 möglichen Übergänge kennen(auch wenn einige keinen Sinn machen, hier wäre dann das Thema cycle checking und multiple path Pruning noch zu klären), sollte es möglich sein den gesamten search space zu zeichnen bevor das Parsen begonnen hat.
+
+What is the advantage of the proposed algorithm in contrast to simply trying to find a good dependency tree by enumerating all possible trees and selecting the best one from them?
+
+
+
+For the search strategies discussed so far: are they a good fit for this search problem and why (not)?
+
+
+
+How would you design a parser using the parser actions together with an ap- propriate search procedure?
