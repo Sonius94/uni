@@ -1,6 +1,6 @@
-1. (a) EIn Parser arbeitet mit Tripeln <S, I, A>. S ist dabei der Stack, I die Input-Liste und A die Verbindungen im Graphen. Folgende Operationen, können damit ausgeführt werden:
+1. (a) Ein Parser arbeitet mit Tripeln <S, I, A>. S ist dabei der Stack, I die Input-Liste und A die Verbindungen im Graphen. Folgende Operationen, können damit ausgeführt werden:
 - Left-Arc: Nimmt oberstes element (n) aus Stack. Zusätzlich wird eine Verbindung hinzugefügt, die vom obersten Element des Inputs (n') zu diesem führt (n'->n, bzw. A U {(n',n)}
-- Right-Arc: Nimmt oberstes Element aus dem Input (n') und legt dieses auf den Stack. Zusätzlich wird eine Verbindung hinzugefügt, die vom obersten Element des Stacks (n) zu diesem führt (n -> n', bzw. A U {(n,n')})
+- Right-Arc: Nimmt oberstes Element aus dem Input (n') und legt dieses auf den Stack. Zusätzlich wird eine Verbindung hinzugefügt, die vom vorher obersten Element des Stacks (n) zu diesem Neuen führt (n -> n', bzw. A U {(n,n')})
 - Reduce: Nimmt einfach oberstes Element vom Stack (Vorausgesetzt das Element hat ein Vater). Also <n|S,I,A> -> <S,I,A>.
 - Shift: Es wird das oberste Element des Inputs genommen und auf den Stack gelegt. Also <S,n|I,A> -> <n|S,I,A>
 (b) Der Parser terminiert, wenn die Input-Liste leer ist (<S,nil,A>), Der Inhalt von S uns A kann beliebig sein.
@@ -15,3 +15,15 @@ TODO Bäume in latex malen
 - Acyclic: zwei Knoten mit Pfeile in beide Richtungen (Kreis)
 - Connected: Einen Graphen malen, mit einem Punkt, der außerhalb liegt und kein Pfeil in oder aus ihn zeigt.
 - Projective: (although it does exlude yles of length greater than 2). Ich denk mal, dass wir einen Graphen malen, mit einem großen kreis  n -> n' -> n'' -> n oder so?
+
+2.
+LA = Left-Arc, RA = Right-Arc, R = Reduce, S = Shift
+<nil, Der Mann isst eine Giraffe, 0>	| S
+<Der, Mann isst eine Giraffe, 0> 		| LA
+<nil, Mann isst eine Giraffe, {(Mann,Der)} | S
+<Mann, isst eine Giraffe, {(Mann,Der)} | LA
+<nil, isst eine Giraffe, {(Mann,Der),(isst,Mann)} | S
+<isst, eine Giraffe, {(Mann,Der),(isst,Mann)} | S
+<eine isst, Giraffe, {(Mann,Der),(isst,Mann)} | LA
+<isst, Giraffe, {(Mann,Der),(isst,Mann),(Giraffe,eine)} | RA
+<Giraffe isst, nil, {(Mann,Der),(isst,Mann),(Giraffe,eine),(isst,Giraffe)} | Terminierung, da I = nil
