@@ -1,0 +1,69 @@
+\documentclass[ngerman]{fbi-aufgabenblatt}
+
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Folgende Angaben bitte anpassen
+
+\renewcommand{\Vorlesung}{Grundlagen der Wissensverarbeitung}
+\renewcommand{\Semester}{WiSe 17/18}
+
+\renewcommand{\Aufgabenblatt}{6}
+\renewcommand{\Teilnehmer}{ Übungsgruppe 2; Tom Kastek (4kastek@inf), Phil Sehlmeyer (4sehlmey@inf), Max Wutz (wutzmax@googlemail.com)}
+
+\begin{document}
+
+\aufgabe{Exercise 6.1: (Search and Parsing)}
+
+\begin{itemize}
+	\item[1.] 
+	\begin{itemize}
+		\item[(a)] Ein Parser arbeitet mit Tripeln <S, I, A>. S ist dabei der Stack, U die Input-Liste und A die Verbindungen im Graphen. Folgende Operationen können damit ausgeführt werden:
+		\begin{itemize}
+			\item Left-Arc: Nimmt oberstes Element (n) aus Stack. Zusätzlich wird eine Verbindung hinzugefügt, die vom obersten Element des Inputs (n') zu diesem führt (n' 						\(\rightarrow\)  n, bzw. A \(\cup\) {(n', n)}).
+			\item Right-Arc: Nimmt oberstes Element aus dem Input (n') und legt dieses auf den Stack. Zusätzlich wird eine Verbindung hinzugefügt, die vom vorher obersten Element des 				Stacks (n) zu diesem neuen Element führt (n \(\rightarrow\) n', bzw. A \(\cup\) {(n, n')}).
+			\item  Reduce: Nimmt oberstes Element vom Stack (Vorausgesetzt, das Element hat einen Vater). Also <n\(\arrowvert\)S, I, A> \(\rightarrow\) <S, I, A>.
+			\item Shift: Es wird das oberste Element des Inputs genommen und auf den Stack gelegt. Also <S, n\(\arrowvert\)I, A> \(\rightarrow\) <n\(\arrowvert\)S, I, A>
+		\end{itemize}
+		\item[(b)] Der Parser terminiert, wenn die Input-Liste leer ist (<S, nil, A>). Der Inhalt von S und A kann beliebig sein.
+		\item[(c)] Ein Abhängigkeitsgraph soll folgende Eigenschaften haben:
+		\begin{itemize}
+			\item Single-head: Der Graph hat einen Kopf, von dem aus sich der gesamte Baum entwickelt.
+			\item Acyclic: Der Baum hat keine Kreise. Sobald im Graph zwei weitere Punkte verbunden werden, würde ein Kreis entstehen.
+			\item Connected: Alle Knoten im Graphen sind transitiv miteinander verbunden.
+			\item Projective: Ein Graph ist prejektiv, wenn jeder Knoten \glqq graph adjacent\grqq{} zum Graphen-Kopf ist. Zwei Knoten sind \glqq graph adjacent\grqq{}, wenn jeder 					Knoten zwischen diesen zweien von einem der beiden dominiert wird.
+		\end{itemize}
+		\item[(d)] 
+	\end{itemize}
+	\item[2.]
+	\begin{align}
+		\text{<nil, Der Mann isst eine Giraffe, 0>} &| S\\
+		\text{<Der, Mann isst eine Giraffe, 0>} &| LA\\
+		\text{<nil, Mann isst eine Giraffe, {(Mann, Der)}} &| S\\
+		\text{<Mann, isst eine Giraffe, {(Mann, Der)}} &| LA\\
+		\text{<nil, isst eine Giraffe, {(Mann, Der), (isst, Mann)}} &| S\\
+		\text{<isst, eine Giraffe, {(Mann, der), (isst, Mann)}} &| S\\
+		\text{<eine isst, Giraffe, {(Mann, Der), (isst, Mann)}} &| LA\\
+		\text{<isst, Giraffe, {(Mann, Der), (isst, Mann), (Giraffe, eine)}} &| RA\\
+		\text{<Giraffe isst, nil, {(Mann, Der), (isst, Mann), (Giraffe, eine), (isst, Giraffe)}} &| \text{Terminierung, da I = nil}\\
+	\end{align}
+	\item[3.]
+	\begin{itemize}
+		\item What are search states? \newline Wir gehen davon aus, dass wir die Suche mit exakt den gleichen Mitteln wie den Parser betreiben. Also einer Liste bzw. Stack, einer Liste 				bzw. String von übrigen Wörtern und einer Tupelliste als Knotenrelation. Also nach wie vor <S, I, A>.
+		\item What is the start state? \newline Genau wie beim Parser ist <nil, W, \(\emptyset\)> der Startzustand.
+		\item What are the end states? \newline Endzustand ist <S, nil, A>, also genau, wenn der gesamte String eingelesen wurde.
+		\item What are the state transitions? \newline Die Übergänge sind genau die 4 Möglichkeiten, die der Parser hat. Left-Arc, Right-Arc, Reduce und Shift. Jeder Knoten in unserem 				Suchraum hat also 4 Kanten.
+		\item Can the seach space be created before the parsing starts? \newline Da wir den String (W) und auch alle 4 möglichen Übergänge kennen (auch wenn einige keinen Sinn machen, 		hier wäre das Thema Cycle Checking und Multiple Path Pruning noch zu klären), sollte es möglich sein, den gesamten Search Space zu zeichnen, bevor das Parsen begonnen hat.
+		\item What is the advantage of the proposed algorithm in contrast to simply trying to find a good dependency tree by enumerating all possible trees and selecting the best one from 			them? \newline
+		\item For the search strategies discussed so far: Are they a good fit for this problem and why (not)? \newline 
+		\item How would you design a parser using the parser actions together with an appropriate search procedure? \newline
+	\end{itemize}
+\end{itemize}
+
+
+
+
+
+\end{document}
