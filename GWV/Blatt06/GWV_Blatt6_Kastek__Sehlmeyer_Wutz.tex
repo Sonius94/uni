@@ -4,6 +4,7 @@
 \usepackage{subfigure}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{tikz}
 
 % Folgende Angaben bitte anpassen
 
@@ -35,7 +36,38 @@
 			\item Connected: Alle Knoten im Graphen sind transitiv miteinander verbunden.
 			\item Projective: Ein Graph ist prejektiv, wenn jeder Knoten \glqq graph adjacent\grqq{} zum Graphen-Kopf ist. Zwei Knoten sind \glqq graph adjacent\grqq{}, wenn jeder 					Knoten zwischen diesen zweien von einem der beiden dominiert wird.
 		\end{itemize}
-		\item[(d)] 
+		\newpage
+		\item[(d)] Gegenbeispiele der verschiedenen Eigenschaften aus Aufgabenteil c.
+		\begin{itemize}
+			\item Single-head: \newline \newline
+			\tikz{
+				\node (a) at (0,3) [shape=circle,draw=black] {a};
+				\node (b) at (4,3) [shape=circle,draw=black] {b};
+				\node (c) at (2,0) [shape=circle,draw=black] {c};
+				\draw (a) edge[->,line width=1pt] (c)	(b) edge[->,line width=1pt] (c);
+			}
+			\item Acyclic: \newline \newline
+			\tikz{
+				\node (a) at (2,3) [shape=circle,draw=black] {a};
+				\node (b) at (0,0) [shape=circle,draw=black] {b};
+				\node (c) at (4,0) [shape=circle,draw=black] {c};		
+				\draw (a) edge[->,line width=1pt] (b)	(a) edge[->,line width=1pt] (c)	(c) edge[->,line width=1pt] (a);
+			}
+			\item Connected: \newline \newline
+			\tikz{
+				\node (a) at (2,3) [shape=circle,draw=black] {a};
+				\node (b) at (0,0) [shape=circle,draw=black] {b};
+				\node (c) at (4,0) [shape=circle,draw=black] {c};
+				\draw (a) edge[->,line width=1pt] (b);
+			}
+			\item Projective: \newline \newline
+			\tikz{
+				\node (a) at (2,3) [shape=circle,draw=black] {a};
+				\node (b) at (0,0) [shape=circle,draw=black] {b};
+				\node (c) at (4,0) [shape=circle,draw=black] {c};
+				\draw (a) edge[->,line width=1pt] (b)	(b) edge[->,line width=1pt] (c)	(c) edge[->,line width=1pt] (a);
+			}
+		\end{itemize}
 	\end{itemize}
 	\item[2.]
 	\begin{align}
