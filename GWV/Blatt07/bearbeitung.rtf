@@ -28,9 +28,9 @@ Au\'dferdem m\'fcssen alle 8 Variablen unterschiedlich sein und am Ende nat\'fcr
 \
 C1 = \{ (S,E,N,D,M,O,R,Y) 
 \f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 \uc0\u8712 
+\uc0\u8712 
 \f0  Z8 | 0 =< S,\'85,Y >= 9 \}\
-C2 = \cf0 \cb1 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \{ (S,E,N,D,M,O,R,Y) 
+C2 = \cf0 \cb1 \kerning1\expnd0\expndtw0 \{ (S,E,N,D,M,O,R,Y) 
 \f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
 \uc0\u8712 
 \f0  Z8 | 1000 * S + 100 * E + 10 * N + D\
@@ -40,8 +40,7 @@ C3 = \cf0 \cb1 \kerning1\expnd0\expndtw0 \{ (S,E,N,D,M,O,R,Y)
 \f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
 \uc0\u8712 
 \f0  Z8 | S != 0 \}\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
-\cf2 \cb3 C4 = \cf0 \cb1 \kerning1\expnd0\expndtw0 \{ (S,E,N,D,M,O,R,Y) 
+C4 = \cf0 \cb1 \kerning1\expnd0\expndtw0 \{ (S,E,N,D,M,O,R,Y) 
 \f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
 \uc0\u8712 
 \f0  Z8 | M != 0 \}\
@@ -51,9 +50,25 @@ C5 = \cf0 \cb1 \kerning1\expnd0\expndtw0 \{ (S,E,N,D,M,O,R,Y)
 \f0  Z8 | S,\'85,Y verschieden \}\
 \
 Aus diesen Constraints folgt: (9,5,6,7,1,0,8,2) 
-\f1 \cf2 \cb3 \uc0\u8712 
+\f1 \uc0\u8712 
 \f0  Z8\
 \
 	9567\
 +	1085\
-=.    10652}
+=.    10652\
+\
+Aufgabe 7.1.2\
+\
+Das Problem hier beginnt schon mit dem ersten Wort. Wir tragen ein Wort horizontal in A1 ein, es muss aber jeder Buchstabe des Wortes ein Anfangsbuchstabe eines anderen Wortes sein k\'f6nnen.\
+\
+Wir haben nur eine begrenzte M\'f6glichkeit an Worten, die meisten beginnen mit einem a, jedoch gibt es kein Wort mit 2 a\'92s.\
+\
+Wir brauchen zum Beispiel f\'fcr die erste Zeile ein Wort das 3 Buchstaben hat f\'fcr die wir alle auch W\'f6rter mit diesen Anfangsbuchstaben haben. zB \'84bat\'93, b  = \{ bad, bag, ban, bat, bee, boa \}, a = \{ add, ado, \'85 , aye \}, t = \{ tar \}.\
+\
+Nun haben wir f\'fcr das t allerdings nur ein Wort, es w\'fcrde sich also automatisch ergeben:\
+\
+BAT\
+XXA\
+XXR\
+\
+Daraus ergeben sich jetzt neue Vorschriften f\'fcr die folgenden Worte. Dementsprechend l\'e4uft man h\'e4ufig in Sackgassen.}
