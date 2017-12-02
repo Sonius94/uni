@@ -1,10 +1,8 @@
 \documentclass[ngerman]{fbi-aufgabenblatt}
 
-\usepackage{graphicx}
-\usepackage{subfigure}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{tikz}
+\usepackage{verbatim}
 
 % Folgende Angaben bitte anpassen
 
@@ -17,8 +15,9 @@
 \begin{document}
 
 \aufgabe{Exercise 7.1: (Send More Money)}
-Variablen: S,E,N,D,M,O,R,Y
-Menge der Variablen: 8
+
+Variablen: S,E,N,D,M,O,R,Y;
+Menge der Variablen: 8;
 Menge der möglichen Zahlen: 10 (0,1,2,3,4,5,6,7,8,9)
 
 Constraints:
@@ -32,10 +31,22 @@ N + R = E
 E + O = N
 S + M = MO
 
-Daraus Wiederrum folgt, dass S und M jeweils NICHT 0 sein können, da aus S + M eine zweistellige Zahl entstehen muss.
+Daraus wiederum folgt, dass S und M jeweils NICHT 0 sein können, da aus S + M eine zweistellige Zahl entstehen muss.
 
-Außerdem müssen alle 8 Variablen unterschiedlich sein und am Ende natürlich den oben genannten Rechnungen standhalten. Zuletzt muss jeder Buchstabe genau einer Zahl zugeordnet werden zwischen 0 und 9, daraus ergeben sich folgende formalisierten Constraints.
+Außerdem müssen alle 8 Variablen unterschiedlich sein und am Ende natürlich den oben genannten Rechnungen standhalten. Zuletzt muss jeder Buchstabe genau einer Zahl zwischen 0 und 9 zugeordnet werden, daraus ergeben sich folgende formalisierten Constraints:
 
+\begin{align*}
+\text{C1 = (S,E,N,D,M,O,R,Y)} 	\in \text{Z8} &| 0 = \text{<S,...,Y> = 9}\\
+\text{C2 = (S,E,N,D,M,O,R,Y)} 	\in \text{Z8} &| 1000 \cdot \text{S} + 100 \cdot \text{E} + 10 \cdot \text{N} + \text{D} + 1000 \cdot \text{M} + 100 \cdot \text{O} + 10 \cdot \text{R} + \text{E}\\
+& = 10000 \cdot \text{M} + 1000 \cdot \text{O} + 100 \cdot \text{N} + 10 \cdot \text{E} + \text{Y}\\
+\text{C3 = (S,E,N,D,M,O,R,Y)} \in \text{Z8} &| \text{S} \neq 0 \\
+\text{C4 = (S,E,N,D,M,O,R,Y)} \in \text{Z8} &| \text{M} \neq 0 \\
+\text{C5 = (S,E,N,D,M,O,R,Y)} \in \text{Z8} &| \text{S,…,Y verschieden} \\
+\end{align*}
+
+Aus diesen Constraints folgt: (9, 5, 6, 7, 1, 0, 8, 2) \(\in\) Z8.
+
+\begin{comment}
 $C1 ={ (S,E,N,D,M,O,R,Y) \in Z8 | 0 =< S,…,Y >= 9 }$
 
 $C2 = { (S,E,N,D,M,O,R,Y) \in Z8 | 1000 * S + 100 * E + 10 * N + D
@@ -49,11 +60,13 @@ $C4 = { (S,E,N,D,M,O,R,Y) \in Z8 | M != 0 }$
 $C5 = { (S,E,N,D,M,O,R,Y) \in Z8 | S,…,Y verschieden }$
 
 $Aus diesen Constraints folgt: (9,5,6,7,1,0,8,2) \in Z8$
+\end{comment}
 
 	9567
 +	1085
 = 10652
 
+\newpage
 
 \aufgabe{Exercise 7.2: (Manual Constraint Solving)}
 
@@ -61,23 +74,24 @@ Das Problem hier beginnt schon mit dem ersten Wort. Wir tragen ein Wort horizont
 
 Wir haben nur eine begrenzte Möglichkeit an Worten, die meisten beginnen mit einem a, jedoch gibt es kein Wort mit 2 a’s.
 
-Wir brauchen zum Beispiel für die erste Zeile ein Wort das 3 Buchstaben hat für die wir alle auch Wörter mit diesen Anfangsbuchstaben haben. zB „bat“, b  = { bad, bag, ban, bat, bee, boa }, a = { add, ado, … , aye }, t = { tar }.
+Wir brauchen zum Beispiel für die erste Zeile ein Wort das 3 Buchstaben hat, außerdem für jeden der Buchstaben ein anderes Wort mit diesem Anfangsbuchstaben, z.B. \glqq bat\grqq{}, b  = { bad, bag, ban, bat, bee, boa }, a = { add, ado, … , aye }, t = { tar }.
 
 Nun haben wir für das t allerdings nur ein Wort, es würde sich also automatisch ergeben:
 
 BAT \newline
 XXA \newline
-XXR \newline
+XXR
 
 Daraus ergeben sich jetzt neue Vorschriften für die folgenden Worte. Dementsprechend läuft man häufig in Sackgassen. Daher starteten wir zu Beginn, indem wir überlegten, welche Worte in die oberste Zeile passen würden, sodass an alle drei Buchstaben noch ein Wort passen würde (wenn also das Wort w enthält, es aber kein Wort mit w gibt, entfällt es). Es bleiben:
 
 are, art, bat, bee, boa, ear, eft, far, fat, oaf, rat, tar
 
-Wenn in ein Wort mit A startet, muss auch das Wort in der ersten linken Spalte mit A starten. Analog zu vorher können also nur die gefundenen Worte, paare ergeben. Wir testen alle Wortpaare wie folgt aus:
+Wenn nun ein Wort mit A startet, muss auch das Wort in der ersten linken Spalte mit A starten. Analog zu vorher können also nur die gefundenen Worte Paare ergeben. Wir testen alle Wortpaare wie folgt aus:
 
 ARE \newline
 RXX \newline
-TXX \newline
+TXX
+
 Dies ist das Beispiel für ARE-ART. Dies entfällt, da es keine 2 Worte mit Rs gibt.
 
 EAR-EFT entfällt auch. Auf F folgt entweder A oder das F-Wort endet auf T. Wenn ein A folgt, hätten wir in der mittleren Spalte ein Wort, das mit AA beginnen müsste, was es nicht gibt. Im anderen Fall, würde die letzte Spalte mit einem RT starten, auch dafür gibt es kein Wort.
@@ -86,17 +100,21 @@ FAR-FAT würde entfallen. Als R-Wort gibt es nur RAT. Danach gibt es kein Wort, 
 
 BEE-ART entfällt. Für ein T-Wort müsste ein E-Wort entweder auf A oder E enden. Beides ist nicht vorhanden.
 
-Also bleibt nurnoch folgende Möglichkeit: \newline
+\newpage
+
+Also bleibt nur noch folgende Möglichkeit:
+
 BEE \newline
 OXX \newline
 AXX
 
-Einziges Wort mit O ist OAF. Daraus folgt als untere Reihe ART, da EA nur auf R und EF nur auf EFT enden kann. Ergebnis: \newline
+Einziges Wort mit O ist OAF. Daraus folgt als untere Reihe ART, da EA nur auf R und EF nur auf EFT enden kann. Ergebnis:
+
 BEE \newline
 OAF \newline
-ART \newline
+ART
 
-\aufgabe{Exercise 7.3: (Domain Consistncy/Arc Consistency)}
+\aufgabe{Exercise 7.3: (Domain Consistency/Arc Consistency)}
 
 Variablen: Alle Wörter
 
@@ -119,6 +137,8 @@ Constraints:
 	\item Mit mehr als einer Domäne: 
 \end{itemize}
 
+\newpage
+
 Mit Domain Consistency bleiben folgende Variablen in den Domänen vorhanden:
 \begin{itemize}
 	\item Z\textsubscript{1} und S\textsubscript{1} enthalten nach der Überprüfung dieselben Worte. Das sind folgende:
@@ -135,5 +155,4 @@ Mit Domain Consistency bleiben folgende Variablen in den Domänen vorhanden:
 	\end{itemize}
 \end{itemize}
 
-		
 \end{document}
