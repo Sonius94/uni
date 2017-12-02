@@ -98,9 +98,42 @@ ART \newline
 
 \aufgabe{Exercise 7.3: (Domain Consistncy/Arc Consistency)}
 
+Variablen: Alle Wörter
 
+Domänen: Zeilen/Spalten (Z\textsubscript{1},Z\textsubscript{2},Z\textsubscript{3},S\textsubscript{1},S\textsubscript{2},S\textsubscript{3})
+\begin{itemize}
+	\item Anfangs enthält jede Domäne alle Wörter
+\end{itemize}
+	
+Constraints: 
+\begin{itemize}
+	\item Auf nur einer Domäne: 
+	\begin{itemize}
+	\item Z\textsubscript{1} enthält nur Variablen, in denen alle Buchstaben eines Wortes ein Anfangsbuchstabe eines anderen Wortes ist 
+	\item S\textsubscript{1} enthält nur Variablen, in denen alle Buchstaben eines  Wortes ein Anfangsbuchstabe eines anderen Wortes ist  
+	\item Z\textsubscript{2} enthält nur Variablen, in denen alle Buchstaben eines Wortes ein mittlerer Buchstabe eines anderen Wortes ist 
+	\item S\textsubscript{2} enthält nur Variablen, in denen alle Buchstaben eines Wortes ein mittlerer Buchstabe eines anderen Wortes ist
+	\item Z\textsubscript{3} enthält nur Variablen, in denen alle Buchstaben eines Wortes ein letzter Buchstabe eines anderen Wortes ist 
+	\item S\textsubscript{3} enthält nur Variablen, in denen alle Buchstaben eines Wortes ein letzter Buchstabe eines anderen Wortes ist 
+	\end{itemize}
+	\item Mit mehr als einer Domäne: 
+\end{itemize}
 
+Mit Domain Consistency bleiben folgende Variablen in den Domänen vorhanden:
+\begin{itemize}
+	\item Z\textsubscript{1} und S\textsubscript{1} enthalten nach der Überprüfung dieselben Worte. Das sind folgende:
+	\begin{itemize}
+		\item are, art, bat, bee, boa, ear, eft, far, oaf, rat, tar
+	\end{itemize}
+	\item Z\textsubscript{2} und S\textsubscript{2} enthalten nach der Überprüfung dieselben Worte. Das sind folgende:
+	\begin{itemize}
+		\item add, ado, age, ago, aid, air, and, any, ape, are, awe, ear, far, fit, oaf
+	\end{itemize}
+	\item Z\textsubscript{3} und S\textsubscript{3} enthalten nach der Überprüfung dieselben Worte. Das sind folgende:
+	\begin{itemize}
+		\item add, ado, age, ago, and, are, ark, arm, art, ear, eel, eft, far, fat, lee, rat, tar
+	\end{itemize}
+\end{itemize}
 
-
-
+		
 \end{document}
