@@ -114,6 +114,8 @@ BEE \newline
 OAF \newline
 ART
 
+\newpage
+
 \aufgabe{Exercise 7.3: (Domain Consistency/Arc Consistency)}
 
 Variablen: Alle Wörter
@@ -127,15 +129,27 @@ Constraints:
 \begin{itemize}
 	\item Auf nur einer Domäne: 
 	\begin{itemize}
-	\item Z\textsubscript{1} enthält nur Variablen, in denen alle Buchstaben eines Wortes ein Anfangsbuchstabe eines anderen Wortes ist 
-	\item S\textsubscript{1} enthält nur Variablen, in denen alle Buchstaben eines  Wortes ein Anfangsbuchstabe eines anderen Wortes ist  
-	\item Z\textsubscript{2} enthält nur Variablen, in denen alle Buchstaben eines Wortes ein mittlerer Buchstabe eines anderen Wortes ist 
-	\item S\textsubscript{2} enthält nur Variablen, in denen alle Buchstaben eines Wortes ein mittlerer Buchstabe eines anderen Wortes ist
-	\item Z\textsubscript{3} enthält nur Variablen, in denen alle Buchstaben eines Wortes ein letzter Buchstabe eines anderen Wortes ist 
-	\item S\textsubscript{3} enthält nur Variablen, in denen alle Buchstaben eines Wortes ein letzter Buchstabe eines anderen Wortes ist 
+		\item Z\textsubscript{1} enthält nur Variablen, in denen alle Buchstaben eines Wortes ein Anfangsbuchstabe eines anderen Wortes ist 
+		\item S\textsubscript{1} enthält nur Variablen, in denen alle Buchstaben eines Wortes ein Anfangsbuchstabe eines anderen Wortes ist  
+		\item Z\textsubscript{2} enthält nur Variablen, in denen alle Buchstaben eines Wortes ein mittlerer Buchstabe eines anderen Wortes ist 
+		\item S\textsubscript{2} enthält nur Variablen, in denen alle Buchstaben eines Wortes ein mittlerer Buchstabe eines anderen Wortes ist
+		\item Z\textsubscript{3} enthält nur Variablen, in denen alle Buchstaben eines Wortes ein letzter Buchstabe eines anderen Wortes ist 
+		\item S\textsubscript{3} enthält nur Variablen, in denen alle Buchstaben eines Wortes ein letzter Buchstabe eines anderen Wortes ist 
 	\end{itemize}
+
 	\item Mit mehr als einer Domäne: 
-\end{itemize}
+	\begin{itemize}
+		\item[(1)] Z\textsubscript{1} und S\textsubscript{1} haben denselben Anfang (Z\textsubscript{1}[0] == S\textsubscript{1}[0])
+		\item[(2)] Z\textsubscript{2} und S\textsubscript{2} haben dieselbe Mitte (Z\textsubscript{2}[1] == S\textsubscript{2}[1])
+		\item[(3)] Z\textsubscript{3} und S\textsubscript{3} haben dasselbe Ende (Z\textsubscript{3}[2] == S\textsubscript{3}[2])
+		\item[(4)] Z\textsubscript{1} endet, womit S\textsubscript{3} beginnt (Z\textsubscript{1}[2] == S\textsubscript{3}[0])
+		\item[(5)] Z\textsubscript{3} beginnt, womit S\textsubscript{1} endet (Z\textsubscript{3}[0] == S\textsubscript{1}[2])
+		\item[(6)] Z\textsubscript{1} hat in der Mitte des S\textsubscript{2} Anfang (Z\textsubscript{1}[1] == S\textsubscript{2}[0])
+		\item[(7)] Z\textsubscript{2} beginnt mit des S\textsubscript{1} Mitte (Z\textsubscript{2}[0] == S\textsubscript{1}[1])
+		\item[(8)] Z\textsubscript{2} endet mit des S\textsubscript{3} Mitte (Z\textsubscript{2}[2] == S\textsubscript{3}[1])
+		\item[(9)] Z\textsubscript{3} Mitte ist des S\textsubscript{1} Ende (Z\textsubscript{3}[1] == S\textsubscript{2}[2]) \\
+	\end{itemize}
+\end{itemize} 
 
 \newpage
 
@@ -151,8 +165,49 @@ Mit Domain Consistency bleiben folgende Variablen in den Domänen vorhanden:
 	\end{itemize}
 	\item Z\textsubscript{3} und S\textsubscript{3} enthalten nach der Überprüfung dieselben Worte. Das sind folgende:
 	\begin{itemize}
-		\item add, ado, age, ago, and, are, ark, arm, art, ear, eel, eft, far, fat, lee, rat, tar
+		\item add, ado, age, ago, and, are, ark, arm, art, ear, eel, eft, far, fat, lee, rat, tar \\
 	\end{itemize}
 \end{itemize}
+
+
+Arc Consistency (wir arbeiten die Constraints von oben nach unten ab. Constraints, die auf veränderte Domänen zeigen, werden erneut geprüft):
+\begin{itemize}
+	\item[(1)] entfernt aus Z\textsubscript{1} und S\textsubscript{1} far, oaf, rat, tar. Es bleiben in Z1 und S1 are, art, bat, bee, boa, ear, eft enthalten.
+	\item[(2)] entfernt aus Z\textsubscript{2} und S\textsubscript{2} ape, are, awe. Es bleiben in Z\textsubscript{2} und S\textsubscript{2} add, ado, age, ago, aid, air, and, any, ear, far, fit, oaf enthalten.
+	\item[(3)] entfernt aus Z\textsubscript{3} und S\textsubscript{3} ark, arm, eel. Es bleiben in Z\textsubscript{3} und S\textsubscript{3} add, ado, age, ago, and, are, art, ear, eft, far, fat, lee, rat, tar enthalten.
+	\item[(4)] Z\textsubscript{1} bleibt. Entfernt aus S\textsubscript{3} far, fat, lee. Es bleiben in S\textsubscript{3} add, ado, age, ago, and, are, art, ear, eft, rat, tar enthalten.
+	\item[(3)] ändert nichts.
+	\item[(5)] entfernt aus Z\textsubscript{3} far, fat, lee. Es gilt wieder Z\textsubscript{3} == S\textsubscript{3}. S\textsubscript{1} ändert sich nicht.
+	\item[(3)] ändert nichts.
+	\item[(6)] entfernt aus Z\textsubscript{1} are, art. Es bleibt bat, bee, boa, ear, eft. Entfernt oaf aus S\textsubscript{2}. Es bleiben add, ado, age, ago, aid, air, and, any, ear, far, fit.
+	\item[(1)] entfernt aus S\textsubscript{1} are, art. Es bleiben bat, bee, boa, ear, eft.
+	\item[(2)] ändert nichts.
+	\item[(4)] ändert nichts.
+	\item[(5)] ändert nichts.
+	\item[(7)] ändert nichts.
+	\item[(8)] entfernt aus Z\textsubscript{2} ado, ago, age, any, fit. Es bleiben add, aid, air, and, ear, far, oaf. Entfernt aus S\textsubscript{3} age, ago, and, ear, rat, tar. Es bleiben add, ado, are, art, eft.
+	\item[(2)] entfernt aus S\textsubscript{2} age, ago. Es bleiben add, ado, aid, air, and, any, ear, fat, fit. Z\textsubscript{2} ändert sich nicht.
+	\item[(3)] entfernt ear, tar aus Z\textsubscript{3}. Es bleibt add, ado, age, ago, and, are, art, eft, rat.
+	\item[(4)] entfernt bat, ear, eft aus Z\textsubscript{1} Es bleiben bee, boa. S\textsubscript{3} bleibt unverändert.
+	\item[(1)] entfernt ear, eft aus S\textsubscript{1}. Es bleiben bat, bee, boa. Z\textsubscript{1} bleibt unverändert.
+	\item[(7)] entfernt far aus Z\textsubscript{2}. Es bleiben add, aid, air, and, ear, oaf. S\textsubscript{1} bleibt unverändert.
+	\item[(2)] ändert nichts.
+	\item[(9)] entfernt aus S\textsubscript{2} ado, any, fit. Es bleiben add, aid, air, and, ear, far.Entfernt aus Z\textsubscript{3} age, ago, eft, rat. Es bleiben add, ado, are, art.
+	\item[(2)] ändert nichts.
+	\item[(3)] ändert nichts.
+	\item[(5)] entfernt aus \textbf{S\textsubscript{1}} bat, bee. Damit bleibt \textbf{boa}. Z\textsubscript{3} bleibt unverändert.
+	\item[(1)] ändert nichts.
+	\item[(6)] entfernt aus \textbf{Z\textsubscript{1}} boa. Damit bleibt \textbf{bee}. Entfernt aus \textbf{S\textsubscript{2}} add, aid, air, and, far. Damit bleibt \textbf{ear}.
+	\item[(1)] ändert nichts.
+	\item[(2)] entfernt aus Z\textsubscript{2} add, aid, air, and. Damit bleiben ear, oaf.
+	\item[(4)] entfernt aus \textbf{S\textsubscript{3}} add, ado, are, art. Damit bleibt \textbf{eft}.
+	\item[(3)] entfernt aus \textbf{Z\textsubscript{3}} add, ado, are. Damit bleibt \textbf{art}.
+	\item[(5)] ändert nichts.
+	\item[(7)] entfernt ear aus \textbf{Z\textsubscript{2}}. Es bleibt \textbf{oaf}.
+	\item[(2)] ändert nichts.
+	\item[(8)] ändert nichts.
+	\item[(9)] ändert nichts.
+\end{itemize}
+Terminierung mit korrekten Values.
 
 \end{document}

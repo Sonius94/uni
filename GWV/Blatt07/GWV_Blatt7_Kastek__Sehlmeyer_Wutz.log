@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2017.3.30)  2 DEC 2017 14:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/W32TeX) (preloaded format=pdflatex 2017.3.30)  2 DEC 2017 18:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -731,32 +731,53 @@ Overfull \vbox (61.01138pt too high) has occurred while \output is active []
 
 
 [2]
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 123.
+Overfull \vbox (61.01138pt too high) has occurred while \output is active []
+
+
+[3]
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 125.
 
  (c:/texlive/2016/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 123.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 125.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10.95> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 130.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 132.
+
+Underfull \hbox (badness 10000) in paragraph at lines 150--151
+
+ []
+
 
 Overfull \vbox (61.01138pt too high) has occurred while \output is active []
 
 
-[3]
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 168--169
+
+ []
+
+
 Overfull \vbox (61.01138pt too high) has occurred while \output is active []
 
 
-[4] (./GWV_Blatt7_Kastek__Sehlmeyer_Wutz.aux) ) 
+[5]
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <8> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 198.
+
+Overfull \vbox (61.01138pt too high) has occurred while \output is active []
+
+
+[6] (./GWV_Blatt7_Kastek__Sehlmeyer_Wutz.aux) ) 
 Here is how much of TeX's memory you used:
- 6411 strings out of 493013
- 94892 string characters out of 6136993
- 255734 words of memory out of 5000000
- 9826 multiletter control sequences out of 15000+600000
- 37399 words of font info for 60 fonts, out of 8000000 for 9000
+ 6414 strings out of 493013
+ 94923 string characters out of 6136993
+ 258734 words of memory out of 5000000
+ 9828 multiletter control sequences out of 15000+600000
+ 40202 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 48i,13n,53p,8847b,293s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,13n,53p,8847b,320s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2016/texmf-dist/font
 s/enc/dvips/base/8r.enc}<c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmr10.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
@@ -764,11 +785,11 @@ s/enc/dvips/base/8r.enc}<c:/texlive/2016/texmf-dist/fonts/type1/public/amsfonts
 e/2016/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb><c:/texlive/2016/texmf-di
 st/fonts/type1/urw/times/utmb8a.pfb><c:/texlive/2016/texmf-dist/fonts/type1/urw
 /times/utmr8a.pfb>
-Output written on GWV_Blatt7_Kastek__Sehlmeyer_Wutz.pdf (4 pages, 62047 bytes).
+Output written on GWV_Blatt7_Kastek__Sehlmeyer_Wutz.pdf (6 pages, 71969 bytes).
 
 PDF statistics:
- 42 PDF objects out of 1000 (max. 8388607)
- 29 compressed objects within 1 object stream
+ 48 PDF objects out of 1000 (max. 8388607)
+ 33 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
