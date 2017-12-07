@@ -1,0 +1,28 @@
+Exercise 8.2 : ( CSI Stellingen )
+Atoms:
+gardener_worked
+butler_worked
+gardener_dirty
+butler_dirty
+
+Annahmen:
+assumable gardener_worked
+aussumable butler_worked
+
+Beobachtungen:
+π(gardener_dirty) = false
+π(butler_dirty) = true
+
+Regeln:
+gardener_worked -> gardener_dirty
+butler_worked -> butler_dirty
+
+Integrity Constraints:
+false <- gardener_dirty und !gardener_dirty
+false <- butler_dirty und !butler_dirty
+
+Da Beobachtungen  
+
+
+
+Exercise 8.3 : ( Diagnosis )
