@@ -4,6 +4,8 @@ gardener_worked
 butler_worked
 gardener_dirty
 butler_dirty
+gardener_is_killer
+butler_is_killer
 
 Annahmen:
 assumable gardener_worked
@@ -18,11 +20,10 @@ gardener_worked -> gardener_dirty
 butler_worked -> butler_dirty
 
 Integrity Constraints:
-false <- gardener_dirty und !gardener_dirty
-false <- butler_dirty und !butler_dirty
+!gardener_is_killer <- gardener_dirty und gardener_worked
+!butler_is_killer <- butler_dirty und butler_worked
 
-Da Beobachtungen  
-
+!gardener_dirty ist geprüft. 
 
 
 Exercise 8.3 : ( Diagnosis )
