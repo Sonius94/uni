@@ -14,8 +14,46 @@
 
 \begin{document}
 
-\aufgabe{Exercise 8.2: CSI Stellingen}
+\aufgabe{Exercise 8.2: (CSI Stellingen)}
 
+Atoms: 
+\begin{itemize}
+\item gardener\_worked
+\item butler\_worked
+\item gardener\_dirty
+\item butler\_dirty
+\item gardener\_is\_killer
+\item butler\_is\_killer \\
+\end{itemize}
 
+Annahmen:
+\begin{itemize}
+\item assumable gardener\_worked
+\item assumable butler\_worked \\
+\end{itemize}
+
+Beobachtungen:
+\begin{itemize}
+\item \(\pi\)(gardener\_dirty) = false
+\item \(\pi\)(butler\_dirty) = true \\
+\end{itemize}
+
+Regeln:
+\begin{itemize}
+\item gardener\_worked \(\rightarrow\) gardener\_dirty
+\item butler\_worked \(\rightarrow\) butler\_dirty \\
+\end{itemize}
+
+Integrity Constraints:
+\begin{itemize}
+\item \(\neg\)(gardener\_is\_killer) \(\leftarrow\) gardener\_dirty \(\land\) gardener\_worked
+\item \(\neg\)(butler\_is\_killer) \(\leftarrow\) butler\_dirty \(\land\) butler\_worked
+\end{itemize}
+
+\(\neg\)(gardener\_is\_killer) ist geprüft.
+
+\newpage
+
+\aufgabe{Exercise 8.3: (Diagnosis)}
 
 \end{document}
