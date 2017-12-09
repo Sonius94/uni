@@ -56,4 +56,116 @@ Integrity Constraints:
 
 \aufgabe{Exercise 8.3: (Diagnosis)}
 
+Assumables:
+\begin{itemize}
+\item batt\_ok (Battery)
+\item ign\_ok (Ignition Key)
+\item efr\_ok (Electronic Fuel Regulation)
+\item start\_ok (Starter)
+\item tank\_ok (Fuel Tank)
+\item pump\_ok (Fuel Pump)
+\item filt\_ok (Filter)
+\item eng\_ok (Engine) \\ 
+\end{itemize}
+
+Representing environment:
+\begin{itemize}
+\item batt\_works \(\leftarrow\) batt\_ok
+\item ign\_works \(\leftarrow\) ign\_ok \(\land\) batt\_works
+\item efr\_works \(\leftarrow\) efr\_ok \(\land\) bat\_works \(\land\) ign\_works
+\item start\_works \(\leftarrow\) start\_ok \(\land\) ign\_works
+\item tank\_works \(\leftarrow\) tank\_ok
+\item pump\_works \(\leftarrow\) pump\_ok \(\land\) tank\_works \(\land\) efr\_works
+\item filt\_works \(\leftarrow\) filt\_ok \(\land\) pump\_works
+\item eng\_works \(\leftarrow\) eng\_ok \(\land\) start\_works \(\land\) filt\_works \\
+\end{itemize}
+
+Zusätzlich die drei Noises:
+\begin{itemize}
+\item noise1 \(\leftarrow\) start\_works
+\item noise2 \(\leftarrow\) pump\_works
+\item noise3 \(\leftarrow\) eng\_works \\
+\end{itemize}
+
+Und die Integrity Constraints zu den Noises:
+\begin{itemize}
+\item false \(\leftarrow\) no\_noise1 \(\land\) noise1
+\item false \(\leftarrow\) no\_noise2 \(\land\) noise2
+\item false \(\leftarrow\) no\_noise3 \(\land\) noise3 \\
+\end{itemize}
+
+Nun die verschiedenen Fälle:
+\begin{itemize}
+\item no noises: \\
+Es gilt also sowohl no\_noise1, no\_noise2 als auch no\_noise3.
+Daraus ergeben sich folgende minimale Konflikte: \\
+
+noise1 \(\leftarrow\) start\_works \\
+noise1 \(\leftarrow\) start\_ok \(\land\) ign\_works \\
+noise1 \(\leftarrow\) start\_ok \(\land\) ign\_ok \(\land\) batt\_works \\
+noise1 \(\leftarrow\) start\_ok \(\land\) ign\_ok \(\land\) batt\_ok
+
+Also der minimale Konflikt \{start\_ok, ign\_key\_ok, batt\_ok\} \\
+
+noise2 \(\leftarrow\) pump\_works \\
+noise2 \(\leftarrow\) pump\_ok \(\land\) tank\_works \(\land\) efr\_works \\
+noise2 \(\leftarrow\) pump\_ok \(\land\) tank\_ok \(\land\) efr\_ok \(\land\) batt\_works \(\land\) ign\_works \\
+noise2 \(\leftarrow\) pump\_ok \(\land\) tank\_ok \(\land\) efr\_ok \(\land\) batt\_ok \(\land\) ign\_ok \(\land\) batt\_works \\
+noise2 \(\leftarrow\) pump\_ok \(\land\) tank\_ok \(\land\) efr\_ok \(\land\) batt\_ok \(\land\) ign\_ok \(\land\)  batt\_ok 
+
+Der minimale Konflikt \{pump\_ok, tank\_ok, efr\_ok, ign\_ok, batt\_ok\} \\
+
+noise3 \(\leftarrow\) eng\_works \\
+noise3 \(\leftarrow\) eng\_ok \(\land\) start\_works \(\land\) filt\_works \\
+noise3 \(\leftarrow\) eng\_ok \(\land\) start\_ok \(\land\) ign\_works \(\land\) filt\_ok \(\land\) pump\_works \\
+noise3 \(\leftarrow\) eng\_ok \(\land\) start\_ok \(\land\) ign\_ok \(\land\) batt\_works \(\land\) filt\_ok \(\land\) pump\_ok \(\land\) tank\_works \(\land\) efr\_works \\
+noise3 \(\leftarrow\) eng\_ok \(\land\) start\_ok \(\land\) ign\_ok \(\land\) batt\_ok \(\land\) filt\_ok \(\land\) pump\_ok \(\land\) tank\_ok \(\land\) efr\_ok \(\land\) batt\_works \(\land\) ign\_works \\
+noise3 \(\leftarrow\) eng\_ok \(\land\) start\_ok \(\land\) ign\_ok \(\land\) batt\_ok \(\land\) filt\_ok \(\land\) pump\_ok \(\land\) tank\_ok \(\land\) efr\_ok \(\land\) batt\_ok \(\land\) ign\_ok \(\land\) batt\_works \\
+noise3 \(\leftarrow\) eng\_ok \(\land\) start\_ok \(\land\) ign\_ok \(\land\) batt\_ok \(\land\) filt\_ok \(\land\) pump\_ok \(\land\) tank\_ok \(\land\) efr\_ok \(\land\) batt\_ok \(\land\) ign\_ok \(\land\)  batt\_ok
+
+Der minimale Konflikt \{eng\_ok, start\_ok, ign\_ok, batt\_ok, filt\_ok, pump\_ok, tank\_ok, efr\_ok\} \\
+
+Die minimalen Diagnosen zu dem Problemfall, dass keiner der drei Noises auftritt, sind also: \\
+
+
+\item Only Noise 1 \\
+Es gelten hier also no\_noise2 und no\_noise3, aus dem Aufgabenteil \glqq No noises\grqq{} werden die minimalen Konflikte übernommen: \\
+\{pump\_ok, tank\_ok, efr\_ok, ign\_ok, batt\_ok\} \\
+\{eng\_ok, start\_ok, ign\_ok, batt\_ok, filt\_ok, pump\_ok, tank\_ok, efr\_ok\} \\
+
+Da aber Noise 1 auftritt, funktionieren offenbar die Battery, der Ignition Key und der Starter, diese werden aus den Mengen entfernt: \\
+\{pump\_ok, tank\_ok, efr\_ok\} \\
+\{eng\_ok, filt\_ok, pump\_ok, tank\_ok, efr\_ok\} \\
+
+Die minimalen Diagnosen zu dem Problemfall, dass nur Noise 1 auftritt, sind also: \\
+
+
+
+
+
+\item Only Noise 2 \\
+Es gelten hier also no\_noise1 und no\_noise3, aus dem Aufgabenteil \glqq No noises\grqq{} werden die minimalen Konflikte übernommen: \\
+\{start\_ok, ign\_ok, batt\_ok\} \\
+\{eng\_ok, start\_ok, ign\_ok, batt\_ok, filt\_ok, pump\_ok, tank\_ok, efr\_ok\}
+
+Noise 2 tritt laut Aufgabenstellung auf, die Fuel Pump, der Fuel Tank, die Electronic Fuel Regulation, die Battery und der Ignition Key funktionieren also. Wir entfernen diese wieder aus den Mengen: \\
+\{start\_ok\} \\
+\{eng\_ok, start\_ok, filt\_ok\}
+
+Die minimalen Diagnosen zu dem Problemfall sind: \\
+
+
+
+\item Noise 1 and 2 but not noise 3
+Es gilt no\_noise3, also: \\
+\{eng\_ok, start\_ok, ign\_ok, batt\_ok, filt\_ok, pump\_ok, tank\_ok, efr\_ok\} \\
+
+Allerdings sind Noise 1 und Noise 2 hörbar, wir entfernen also die Battery, den Ignition Key, den Starter, die Electronic Fuel Regulation, den Fuel Tank und die Fuel Pump aus der Menge: \\
+\{eng\_ok, filt\_ok\} \\
+
+Die minimalen Diagnosen zu dem Problemfall sind also: \\
+\{eng\_ok\}, \{filt\_ok\}
+
+\end{itemize}
+
 \end{document}
