@@ -67,8 +67,20 @@ motor_läuft <- starter_dreht ∧ benzinpumpe_pumpt ∧ NOT filter_istdicht ∧ 
 
 Im Falle von NO NOISE:
 
-Annahme:
+Beobachtungen:
 
 NOT starter_dreht
 NOT benzinpumpe_pumpt
 NOT motor_läuft
+
+Daraus folgt:
+
+NOT starter_dreht -> NOT zündschlüssel_aktiviert
+NOT benzinpumpe_pumpt -> NOT benzinreglung_schaltet
+NOT motor_läuft -> NOT starter_dreht ∨ NOT benzinpumpe_pumpt ∨ filter_istdicht ∨ tank_istleer
+
+NOT zündschlüssel_aktiviert -> NOT batterie_geladen
+NOT benzinreglung_schaltet -> NOT batterie_geladen ∨ NOT zündschlüssel_aktiviert
+
+Daraus folgt: NOT batterie_geladen
+
