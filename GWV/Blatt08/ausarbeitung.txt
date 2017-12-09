@@ -9,7 +9,7 @@ butler_is_killer
 
 Annahmen:
 assumable gardener_worked
-aussumable butler_worked
+assumable butler_worked
 
 Beobachtungen:
 π(gardener_dirty) = false
@@ -27,3 +27,48 @@ Integrity Constraints:
 
 
 Exercise 8.3 : ( Diagnosis )
+
+Informal:
+
+NO NOISE:
+
+Wir wissen der Starter und die Benzinpumpe geben keine Geräusche von sich, daraus resultiert natürlich auch das Der Motor nicht starten kann. Es sind also entweder beide kaputt (unwahrscheinlich) oder der Teil der die beiden Verbindet hat ein Problem (In dem Fall die Batterie)
+
+ONLY NOISE 1:
+
+Der Starter funktioniert, daraus folgt das auch die Batterie geladen ist und der Zündschlüssel funktioniert. Jedoch springt die Benzinpumpe nicht an, was entweder an der Elektronik fuel Regulation liegt oder an der Pumpe selbst. Der Motor kann nicht starten wenn die Benzinpumpe nicht pumpt, logischer weise also kein Geräusch 3.
+
+ONLY NOISE 2:
+
+Die Benzinpumpe funktioniert, also auch alle grauen Kästchen auf dem Weg dorthin, Der Starter funktioniert nicht, also ist er kaputt da alle anderen Komponenten auch mit der Benzinpumpe verknüpft sind. Motor kann natürlich nicht starten wenn der Starter nicht funktioniert.
+
+NOISE 1 AND 2 BUT NOT NOISE 3:
+
+Starter und Benzinpumpe funktionieren, aber der Motor startet nicht. Daraus folgt, dass entweder der Benzinfilter dicht ist oder der Tank leer ist, da der Motor ansonsten starten müsste.
+
+Atome:
+
+batterie_geladen
+zündschlüssel_aktiviert
+benzinreglung_schaltet
+starter_dreht
+benzinpumpe_pumpt
+tank_istleer
+filter_istdicht
+motor_läuft
+
+Regeln:
+
+zündschlüssel_aktiviert <- batterie_geladen
+benzinreglung_schaltet <- batterie_geladen ∧ zündschlüssel_aktiviert
+starter_dreht <- zündschlüssel_aktiviert
+benzinpumpe_pumpt <- benzinreglung_schaltet
+motor_läuft <- starter_dreht ∧ benzinpumpe_pumpt ∧ NOT filter_istdicht ∧ NOT tank_istleer
+
+Im Falle von NO NOISE:
+
+Annahme:
+
+NOT starter_dreht
+NOT benzinpumpe_pumpt
+NOT motor_läuft
