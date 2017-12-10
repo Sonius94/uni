@@ -89,9 +89,9 @@ Zusätzlich die drei Noises:
 
 Und die Integrity Constraints zu den Noises:
 \begin{itemize}
-\item false \(\leftarrow\) no\_noise1 \(\land\) noise1
-\item false \(\leftarrow\) no\_noise2 \(\land\) noise2
-\item false \(\leftarrow\) no\_noise3 \(\land\) noise3 \\
+\item false \(\leftarrow\) no\_noise1 
+\item false \(\leftarrow\) no\_noise2
+\item false \(\leftarrow\) no\_noise3  \\
 \end{itemize}
 
 Nun die verschiedenen Fälle:
@@ -125,7 +125,7 @@ noise3 \(\leftarrow\) eng\_ok \(\land\) start\_ok \(\land\) ign\_ok \(\land\) ba
 
 Der minimale Konflikt \{eng\_ok, start\_ok, ign\_ok, batt\_ok, filt\_ok, pump\_ok, tank\_ok, efr\_ok\} \\
 
-Die minimalen Diagnosen zu dem Problemfall, dass keiner der drei Noises auftritt, sind also: \\
+Die minimalen Diagnosen zu dem Problemfall, dass keiner der drei Noises auftritt, ist also die Menge aller Objekte. \\
 
 
 \item Only Noise 1 \\
@@ -134,10 +134,10 @@ Es gelten hier also no\_noise2 und no\_noise3, aus dem Aufgabenteil \glqq No noi
 \{eng\_ok, start\_ok, ign\_ok, batt\_ok, filt\_ok, pump\_ok, tank\_ok, efr\_ok\} \\
 
 Da aber Noise 1 auftritt, funktionieren offenbar die Battery, der Ignition Key und der Starter, diese werden aus den Mengen entfernt: \\
-\{pump\_ok, tank\_ok, efr\_ok\} \\
-\{eng\_ok, filt\_ok, pump\_ok, tank\_ok, efr\_ok\} \\
 
 Die minimalen Diagnosen zu dem Problemfall, dass nur Noise 1 auftritt, sind also: \\
+\{pump\_ok, tank\_ok, efr\_ok\} \\
+\{eng\_ok, filt\_ok, pump\_ok, tank\_ok, efr\_ok\} \\
 
 
 
@@ -148,23 +148,21 @@ Es gelten hier also no\_noise1 und no\_noise3, aus dem Aufgabenteil \glqq No noi
 \{start\_ok, ign\_ok, batt\_ok\} \\
 \{eng\_ok, start\_ok, ign\_ok, batt\_ok, filt\_ok, pump\_ok, tank\_ok, efr\_ok\}
 
-Noise 2 tritt laut Aufgabenstellung auf, die Fuel Pump, der Fuel Tank, die Electronic Fuel Regulation, die Battery und der Ignition Key funktionieren also. Wir entfernen diese wieder aus den Mengen: \\
-\{start\_ok\} \\
-\{eng\_ok, start\_ok, filt\_ok\}
+Noise 2 tritt laut Aufgabenstellung auf, die Fuel Pump, der Fuel Tank, die Electronic Fuel Regulation, die Battery und der Ignition Key funktionieren also. Wir entfernen diese wieder aus den Mengen. \\
 
 Die minimalen Diagnosen zu dem Problemfall sind: \\
-
+\{start\_ok\} \\
+\{eng\_ok, start\_ok, filt\_ok\}
 
 
 \item Noise 1 and 2 but not noise 3
 Es gilt no\_noise3, also: \\
 \{eng\_ok, start\_ok, ign\_ok, batt\_ok, filt\_ok, pump\_ok, tank\_ok, efr\_ok\} \\
 
-Allerdings sind Noise 1 und Noise 2 hörbar, wir entfernen also die Battery, den Ignition Key, den Starter, die Electronic Fuel Regulation, den Fuel Tank und die Fuel Pump aus der Menge: \\
-\{eng\_ok, filt\_ok\} \\
+Allerdings sind Noise 1 und Noise 2 hörbar, wir entfernen also die Battery, den Ignition Key, den Starter, die Electronic Fuel Regulation, den Fuel Tank und die Fuel Pump aus der Menge. \\
 
-Die minimalen Diagnosen zu dem Problemfall sind also: \\
-\{eng\_ok\}, \{filt\_ok\}
+Die minimalen Diagnosen zu dem Problemfall lauten also: \\
+\{eng\_ok\ ,filt\_ok\}
 
 \end{itemize}
 
