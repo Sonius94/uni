@@ -1,0 +1,22 @@
+Aufgabe 9.3:
+
+The probability that the battery is working:
+
+Die Batterie ist unabhängig von allen anderen Komponenten. Daher ist die Wahrscheinlichkeit das sie funktioniert 0,9 (90%) und die Wahrscheinlichkeit das sie kaputt ist 0,1 (10%).
+
+The probability that the starter is working:
+
+Der Starter hängt vom Zündschlüssel ab, dieser wiederrum von der Batterie. Die reine Wahrscheinlichkeit das der Starter funktioniert liegt bei 0,9 (90%). Ebenso wie der Zündschlüssel und die Batterie. Es gilt also -> 0,9 * 0,9 * 0,9 = 0,729 (72,9%).
+
+The probability that the engine is working:
+
+Der Motor hängt von allen Komponenten ab. Direkt allerdings nurn von Filter und von Starter. Die Wahrscheinlichkeit das der Starter funktioniert ist uns bekannt. (0,729)
+Damit der Filter funktionieren kann, muss die Batterie funktionieren (0,9), der Zündschlüssel funktionieren (0,9), die Benzinpumpenelektronik (0,9), die Benzinpumpe funktionieren (0,9) und der Tank (0,9) natürlich auch. Züsätzlich die Wahrscheinlichkeit von 0,9 das der Filter selber funktioniert. Also -> 0,9 * 0,9 * 0,9 * 0,9 * 0,9 * 0,9 = 0,531441 (ca. 53,1%)
+
+Es folgt also die Gesammtwarscheinlichkeit von: 0,9 (engine) * 0,729 (starter) * 0,531441 (filter) = 0,3486784401 (ca. 34,9%)
+
+The probability that the engine is working after making the observation that the pump is working:
+
+Hier unterscheidet sich die Berechnung nur insofern, dass die Warhscheinlichkeit das die Pumpe funktioniert statt 0,9 gleich 1,0 ist. Es folgt, dass die Wahrscheinlichkeit das der Filter funktioniert gleich 0,9 * 0,9 * 0,9 * 0,9 * * 0,9 * 1,0 = 0,59049 (ca. 59,0%)
+
+Insgesammt also 0,9 * 0,729 * 0,59049 = 0,387420489 (ca. 38,7%)
