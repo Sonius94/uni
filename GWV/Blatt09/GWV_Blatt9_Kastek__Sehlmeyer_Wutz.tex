@@ -46,35 +46,45 @@ Belief Network\\
 \begin{align*}
 &P(Battery) &&= 0.9\\
 &P(\neg Battery) &&= 0.1\\
-\end{align*}
-\begin{align*}
+&\\
 &P(Ignition Key|Battery) &&= 0.9\\
 &P(\neg Ignition Key| Battery) &&= 0.1\\
-\end{align*}
-\begin{align*}
+&\\
 &P(Electronic Fuel Regulation|Battery) &&= 0.9\\
 &P(\neg Electronic Fuel Regulation| Battery) &&= 0.1\\
-\end{align*}
-\begin{align*}
+&\\
 &P(Fuel Tank) &&= 0.9\\
 &P(\neg Fuel Tank) &&= 0.1\\
-\end{align*}
-\begin{align*}
+&\\
 &P(Starter| Ignition Key) &&= 0.9\\
 &P(\neg Starter | Ignition Key) &&= 0.1\\
-\end{align*}
-\begin{align*}
+&\\
 &P(Fuel Pump | Electronic Fuel Regulation \land Fuel Tank) &&= 0.9\\
 &P(\neg Fuel Pump | Electronic Fuel Regulation \land Fuel Tank) &&= 0.1\\
-\end{align*}
-\begin{align*}
+&\\
 &P(Filter | Fuel Pump) &&= 0.9\\
 &P(\neg Filter | Fuel Pump) &&= 0.1\\
-\end{align*}
-\begin{align*}
+&\\
 &P(Engine | Starter \land Filter) &&= 0.9\\
 &P(\neg Engine | Starter \land Filter) &&= 0.1\\
 \end{align*}
 
 
+\aufgabe{Exercise 9.4: (Bayesian Probabilities)}
+
+\begin{align*}
+&P(Smuggler) &&= 0.01\\
+&P(\neg Smuggler) &&= 0.99\\
+&\\
+&P(BarkingDog | Smuggler) &&= 0.8\\
+&P(\neg BarkingDog | Smuggler) &&= 0.2\\
+&P(BarkingDog | \neg Smuggler) &&= 0.05\\
+&P(\neg BarkingDog | \neg Smuggler) &&= 0.95\\
+&P(Sweating | \neg Smuggler \land  \neg Fieber) &&= 0.00\\
+&P(Sweating |  Smuggler \land \neg Fieber) &&= 0.4\\
+&P(Sweating |  Smuggler \land Fieber) &&= 0.8\\
+&P(Sweating |  \neg Smuggler \land Fieber) &&= 0.6\\
+&P(Fieber) &&= 0.013\\
+&P(\neg Fieber) &&= 0.987\\
+\end{align*}
 \end{document}
