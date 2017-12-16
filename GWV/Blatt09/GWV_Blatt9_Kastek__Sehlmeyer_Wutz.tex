@@ -92,8 +92,14 @@ Belief Network\\
 
 Berechnen weiterer Wahrscheinlichkeiten:
 \begin{align*}
-&P(Smuggler | BarkingDog)\\
+&P(Smuggler | BarkingDog) &&= (P(BarkingDog | Smuggler) \cdot P(Smuggler)) / P(BarkingDog) \\
+& &&= (0.8 \cdot 0.01) / 0.0575\\
+& &&= 0,014\\
 &\\
+&P(BarkingDog) &&= P(Smuggler) \cdot P(BarkingDog | Smuggler) \\
+& &&   + P( \neg Smuggler) \cdot P(BarkingDog | \neg Smuggler) \\
+& &&= 0.01 \cdot 0.8 + 0.99 \cdot 0.05 \\
+& &&= 0.0575 \\
 \end{align*}
 \begin{align*}
 &P(Sweating)\\
