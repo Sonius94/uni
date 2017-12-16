@@ -1,10 +1,8 @@
-import java.util.Hashtable; 
-import java.util.ArrayList;
 import java.net.*;
 import java.io.*;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.Set;
-import java.util.Iterator;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class MarkovChain {
 	Hashtable<String, ArrayList<String>> wordPredicts = new Hashtable<String,ArrayList<String>>();
@@ -72,7 +70,30 @@ public class MarkovChain {
 	}
 	
 	private String predictNextWord(String lastWord) {
-		
+		ArrayList<String> possibleWords = wordPredicts.get(lastWord);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+
+		for(int i = 0; i < possibleWords.size(); i++){
+		   if(map.get(possibleWords.get(i)) == null){
+		      map.put(possibleWords.get(i),1);
+		   }else{
+		      map.put(possibleWords.get(i), map.get(possibleWords.get(i)) + 1);
+		   }
+		}
+		int largest = 0;
+		String stringOfLargest = null;
+		for (Entry<String, Integer> entry : map.entrySet()) {
+		   String key = entry.getKey();
+		   int value = entry.getValue();
+		   if( value > largest){
+		      largest = value;
+		      stringOfLargest = key;
+		   }
+		}
+		return stringOfLargest;
+	}
+	
+	private String getStartWord(String lastWord) {
 		int sum_of_probs = 0;
 		if (wordPredicts.containsKey(lastWord)) {
 			ArrayList<String> possibleWords = wordPredicts.get(lastWord);
@@ -98,7 +119,7 @@ public class MarkovChain {
 	}
 	
 	private String getRandomStartWord() {
-		return predictNextWord(startToken);
+		return getStartWord(startToken);
 	}
 	
 	// TODO Sehr viel unnötige Berechnungen, muss optimiert werden
