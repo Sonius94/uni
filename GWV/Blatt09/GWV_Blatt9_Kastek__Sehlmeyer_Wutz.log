@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.11.5)  16 DEC 2017 23:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.11.5)  17 DEC 2017 00:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -895,7 +895,7 @@ Overfull \vbox (61.01138pt too high) has occurred while \output is active []
 
 
 [2]
-Overfull \hbox (17.718pt too wide) in paragraph at lines 128--128
+Overfull \hbox (17.718pt too wide) in paragraph at lines 129--129
 [] 
  []
 
@@ -904,6 +904,11 @@ Overfull \vbox (61.01138pt too high) has occurred while \output is active []
 
 
 [3]
+Overfull \hbox (19.24002pt too wide) in paragraph at lines 144--144
+[] 
+ []
+
+
 Overfull \vbox (61.01138pt too high) has occurred while \output is active []
 
 
@@ -911,7 +916,7 @@ Overfull \vbox (61.01138pt too high) has occurred while \output is active []
 Here is how much of TeX's memory you used:
  15142 strings out of 493117
  286012 string characters out of 6135433
- 377974 words of memory out of 5000000
+ 377971 words of memory out of 5000000
  18278 multiletter control sequences out of 15000+600000
  30230 words of font info for 55 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -925,7 +930,7 @@ c/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/he
 lvetic/uhvb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/helvetic/
 uhvr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/urw/times/utmr8a.pfb
 >
-Output written on GWV_Blatt9_Kastek__Sehlmeyer_Wutz.pdf (4 pages, 82054 bytes).
+Output written on GWV_Blatt9_Kastek__Sehlmeyer_Wutz.pdf (4 pages, 82317 bytes).
 
 PDF statistics:
  49 PDF objects out of 1000 (max. 8388607)

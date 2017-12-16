@@ -104,8 +104,10 @@ Aufgabenstellungen:
 &\\
 &P(Sweating | \neg Smuggler \land  \neg Fieber) &&= 0.00\\
 &P(Sweating |  Smuggler \land \neg Fieber) &&= 0.4\\
-&P(Sweating |  Smuggler \land Fieber) &&= 0.8\\
 &P(Sweating |  \neg Smuggler \land Fieber) &&= 0.6\\
+&P(Sweating |  Smuggler \land Fieber) &&= 0.8\\
+&\\
+&P(Sweating |  \neg(Smuggler \land Fieber)) &&= 0.2\\
 &\\
 &P(Fieber) &&= 0.013\\
 &P(\neg Fieber) &&= 0.987\\
@@ -114,7 +116,6 @@ Aufgabenstellungen:
 Berechnen weiterer Wahrscheinlichkeiten:
 \begin{align*}
 &P(Smuggler | BarkingDog)\\
-&\\
 \end{align*}
 \begin{align*}
 &P(Smuggler | BarkingDog) &&= (P(BarkingDog | Smuggler) \cdot P(Smuggler)) / P(BarkingDog) \\
@@ -128,15 +129,21 @@ Berechnen weiterer Wahrscheinlichkeiten:
 \end{align*}
 \begin{align*}
 &P(Sweating)\\
-&\\
 \end{align*}
 \begin{align*}
 &P(Sweating) &&= P(Smuggler \land Fieber) \cdot  P(Sweating | Smuggler \land Fieber)\\
-& && + P(\neg(Smuggler \land Fieber)) \cdot  P(\neg(Smuggler \land Fieber)\\
+& && + P(\neg(Smuggler \land Fieber)) \cdot  P(Sweating | \neg(Smuggler \land Fieber)\\
+& &&= 0.00013 \cdot 0.8 + 0.99987 \cdot 0.2 \\
+& &&= 0.2 \\
+&P(Smuggler \land Fieber) &&= 0.01 \cdot 0.013 \\
+& &&= 0,00013\\
+& P(\neg(Smuggler \land Fieber)) &&= P(\neg Smuggler \land Fieber) + P(\neg Smuggler \land \neg Fieber) \\
+& &&+P(Smuggler \land \neg Fieber) \\
+& &&= 0.99 \cdot 0.013 + 0.99 \cdot 0.987 + 0.01 \cdot 0.987 \\
+& &&= 0,99987
 \end{align*}
 \begin{align*}
 &P(Smuggler | BarkingDog \land Sweating)\\
-&\\
 \end{align*}
 
 \end{document}
