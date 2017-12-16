@@ -43,6 +43,7 @@ Belief Network\\
 	\path [->] (EFR) edge node {} (FP); 
 \end{tikzpicture}
 
+Aus der Aufgabenstellung ableitbare Wahrscheinlichkeiten:
 \begin{align*}
 &P(Battery) &&= 0.9\\
 &P(\neg Battery) &&= 0.1\\
@@ -69,8 +70,28 @@ Belief Network\\
 &P(\neg Engine | Starter \land Filter) &&= 0.1\\
 \end{align*}
 
+Aufgabenstellungen:
+
+\begin{itemize}
+\item Die Wahrscheinlichkeit, dass die Battery funktioniert: Aus den oben angegebenen Wahrscheinlichkeiten ablesbar. \(P(Battery) = 0.9\)
+\item Die Wahrscheinlichkeit, dass der Starter funktioniert: Dafür müssen die davor liegenden Teile funktionieren, also der Ignition Key und die Battery. \(P(Battery) \cdot P(IgnitionKey|Battery \cdot P(Starter|IgnitionKey) = 0.9 \cdot 0.9 \cdot 0.9 = 0.729\)
+\item Die Wahrscheinlichkeit, dass die Engine funktioniert: Es müssen sämtliche Vorgänger im Netzwerk und die Engine selbst, also alle, funktionieren. \(0.9^{8} \approx 0.430\)
+\item Die Wahrscheinlichkeit, dass die Engine funktioniert, gegeben, dass die Pump funktioniert. Da die Pump funktioniert, müssen sämtliche Vorgänger im Network ebenfalls funktionieren, also Electronic Fuel Regulation, Battery, und Fuel Tank. Diese fallen also aus der Rechnung raus. \(0.9^{4} \approx 0.656\)
+\end{itemize}
+
 
 \aufgabe{Exercise 9.4: (Bayesian Probabilities)}
+
+\begin{tikzpicture}
+	\node [shape=rectangle,draw=black] (B) at (-1.5,2) {BarkingDog};
+	\node [shape=rectangle,draw=black] (F) at (2.5,4) {Fieber};
+	\node [shape=rectangle,draw=black] (Sm) at (0,4) {Smuggler};
+	\node [shape=rectangle,draw=black] (Sw) at (1.25,2) {Sweating};
+	
+	\path [->] (Sm) edge node {} (B);
+	\path [->] (Sm) edge node {} (Sw);
+	\path [->] (F) edge node {} (Sw);
+\end{tikzpicture}
 
 \begin{align*}
 &P(Smuggler) &&= 0.01\\
