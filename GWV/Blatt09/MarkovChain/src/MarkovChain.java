@@ -9,25 +9,34 @@ import java.util.Iterator;
 public class MarkovChain {
 	Hashtable<String, ArrayList<String>> wordPredicts = new Hashtable<String,ArrayList<String>>();
 	static final String filename = "ggcc-one-word-per-line.txt";
+	static String startToken = "_startTokenWord";
+	static String endToken = "_endTokenWord";
+	static String startWord = "ich";
+	static int sentenceLength = 10;
+	
+	private String sentence = "";
+	private String lastWord = "";
+	
 	
 	public static void main(String[] args) {
 		MarkovChain markov = new MarkovChain();
 		markov.learnPredicitons();
-		markov.generateSentence("ich",10);
+		//markov.generateSentence(startWord,sentenceLength);
+		markov.generateRandomSentence();
 	}
 
 	public void generateSentence(String startWord, int sentenceLenght) {
-		String sentence = "";
-		String lastWord = startWord;
+		lastWord = startWord;
 		for (int i = 0; i < sentenceLenght; i++) {
-			if (lastWord == null) {
-				sentence += ". ";
-				lastWord = "ich";
-			}
-			sentence += " " + lastWord;
-			lastWord = predictNextWord(lastWord);
+			addNextWord();
 		}
 		System.out.println(sentence);
+	}
+	
+	public void generateRandomSentence() {
+		String randomStart = getRandomStartWord();
+		int randomNum = ThreadLocalRandom.current().nextInt(10, 15);
+		generateSentence(randomStart,randomNum);
 	}
 	
 	/*
@@ -36,21 +45,12 @@ public class MarkovChain {
 	public void trainMarkov(ArrayList<String> comment) {
 		for (int i = 0; i < comment.size(); i++) {
 			if (i == 0 && comment.size() > 1) {
-				ArrayList<String> suffix = wordPredicts.get(comment.get(i));
-				if (suffix == null) {
-					suffix = new ArrayList<String>();
-				}
-				suffix.add(comment.get(i+1));
-				wordPredicts.put(comment.get(i), suffix);
+				addWordToToken(comment.get(i),startToken);
+				addWordToToken(comment.get(i+1),comment.get(i));
 			} else if (i == comment.size()-1) {
-				// Do nothing because there will be no next word
+				addWordToToken(comment.get(i),endToken); // isnt used after anymore?
 			} else {
-				ArrayList<String> suffix = wordPredicts.get(comment.get(i));
-				if (suffix == null) {
-					suffix = new ArrayList<String>();
-				}
-				suffix.add(comment.get(i+1));
-				wordPredicts.put(comment.get(i), suffix);
+				addWordToToken(comment.get(i+1), comment.get(i));
 			}
 		}
 	}
@@ -72,11 +72,13 @@ public class MarkovChain {
 	}
 	
 	private String predictNextWord(String lastWord) {
-		double r  = ThreadLocalRandom.current().nextDouble(0.0, 1.0);
-		double sum_of_probs = 0;
+		
+		int sum_of_probs = 0;
 		if (wordPredicts.containsKey(lastWord)) {
 			ArrayList<String> possibleWords = wordPredicts.get(lastWord);
-			Hashtable<String, Double> wordPredicitions = getPredicitonValues(possibleWords);
+			Hashtable<String, Integer> wordPredicitions = getPredicitonValues(possibleWords);
+			int border = getTotalCount(wordPredicitions);
+			int r = ThreadLocalRandom.current().nextInt(0, border);
 			
 			Set<String> keys = wordPredicitions.keySet();
 			Iterator<String> itr = keys.iterator();
@@ -89,14 +91,19 @@ public class MarkovChain {
 		   	         return str;
 		   	     }
 			 }
+			System.out.println(sum_of_probs);
 			return str;
 		}
 		return null;
 	}
 	
+	private String getRandomStartWord() {
+		return predictNextWord(startToken);
+	}
+	
 	// TODO Sehr viel unnötige Berechnungen, muss optimiert werden
-	private Hashtable<String, Double> getPredicitonValues(ArrayList<String> words) {
-		Hashtable<String, Double> returnValue = new Hashtable<String, Double>();
+	private Hashtable<String, Integer> getPredicitonValues(ArrayList<String> words) {
+		Hashtable<String, Integer> returnValue = new Hashtable<String, Integer>();
 		for (int i = 0; i < words.size(); i++) {
 			String word = words.get(i);
 			int count = 0;
@@ -105,10 +112,38 @@ public class MarkovChain {
 					count++;
 				}
 			}
-			double percentage = count / words.size();
-			returnValue.put(word, percentage);
+			returnValue.put(word, count);
 		}
 		return returnValue;
+	}
+	
+	private void addWordToToken(String extraValue, String key) {
+		ArrayList<String> words = wordPredicts.get(key);
+		if (words == null) {
+			words = new ArrayList<String>();
+		}
+		words.add(extraValue);
+		wordPredicts.put(key, words);
+	}
+	
+	private void addNextWord() {
+		if (lastWord == null) {
+			sentence += ". ";
+			lastWord = getRandomStartWord();
+		}
+		sentence += " " + lastWord;
+		lastWord = predictNextWord(lastWord);
+	}
+	
+	private int getTotalCount(Hashtable<String, Integer> words) {
+		int totalCount = 0;
+		Set<String> keys = words.keySet();
+		Iterator<String> itr = keys.iterator();
+		while (itr.hasNext()) { 
+		     String str = itr.next();
+		     totalCount += words.get(str);
+		 }
+		return totalCount;
 	}
 	
 	private BufferedReader getReader() throws IOException {
