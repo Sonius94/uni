@@ -8,10 +8,26 @@ public class PoSTagger {
 	Hashtable<String, ArrayList<String>> wordPredicts = new Hashtable<String,ArrayList<String>>();
 	Hashtable<String, String> tagForWords = new Hashtable<String,String>();
 	static final String filename = "hdt-1-10000-train.tags";
+	private Scanner scan;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		PoSTagger posTagger = new PoSTagger();
-		posTagger.learnPredicitons();
+		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("1->file 2->input 0->abort");
+		int choice;
+		choice = Integer.parseInt(bf.readLine());
+	    switch(choice) {
+	    	case 1:
+	    		posTagger.learnPredicitonsFromFile();
+	            break;
+	    	case 2:
+	            posTagger.learnPredicitonsFromInput();
+	            break;
+	    	case 0:
+	            break;
+	    	default:break;
+	    }
+	        
 		/*
 		ArrayList<String> testList = new ArrayList<String>();
 		testList.add("die");
@@ -23,7 +39,7 @@ public class PoSTagger {
 		// LESE SATZ AUS COMMANDLINE AUS
 	}
 	
-	public void learnPredicitons() {
+	public void learnPredicitonsFromFile() {
 		try (BufferedReader br = getReader()) {
 			ArrayList<String> sentence = new ArrayList<>();
 			for(String line; (line = br.readLine()) != null; ) {
@@ -37,6 +53,17 @@ public class PoSTagger {
 		} catch (IOException e) {
 			System.out.println(e);
 		}   
+	}
+	
+	public void learnPredicitonsFromInput() {
+		ArrayList<String> br = null;
+		try {
+			br = getCmdInput();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		trainMarkov(br);
 	}
 	
 	/*
@@ -113,6 +140,20 @@ public class PoSTagger {
 		URL path = PoSTagger.class.getResource(filename);
 		File file = new File(path.getFile());
 		return new BufferedReader(new FileReader(file));
+	}
+	
+	private ArrayList<String> getCmdInput() throws IOException {
+		scan = new Scanner(System.in);
+        ArrayList<String> lines = new ArrayList<String>();
+        String s;
+        while (true) {
+            s = scan.nextLine();
+            if (s.equals("")) {
+                break;
+            }
+            lines.add(s);
+        }
+		return lines;
 	}
 	
 	private String predictNextTag(String lastTag) {
