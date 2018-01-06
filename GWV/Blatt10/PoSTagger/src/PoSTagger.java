@@ -12,28 +12,15 @@ public class PoSTagger {
 	
 	public static void main(String[] args) throws IOException {
 		PoSTagger posTagger = new PoSTagger();
-		BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("1->file 2->input 0->abort");
-		int choice;
-		choice = Integer.parseInt(bf.readLine());
-	    switch(choice) {
-	    	case 1:
-	    		posTagger.learnPredicitonsFromFile();
-	            break;
-	    	case 2:
-	    		ArrayList<String> input = null;
-	    		try {
-	    			input = posTagger.getCmdInput();
-	    		} catch (IOException e) {
-	    			e.printStackTrace();
-	    		}
-	    		System.out.println(posTagger.generateTaggedString(input.get(0),input.size()));
-	            break;
-	    	case 0:
-	            break;
-	    	default:break;
+	    posTagger.learnPredicitonsFromFile();
+	    ArrayList<String> input = null;
+	    try {
+	    	input = posTagger.getCmdInput();
+	    } catch (IOException e) {
+	    	e.printStackTrace();
 	    }
-	        
+	    System.out.println(posTagger.generateTaggedString(input.get(0),input.size()));
+	    
 		/*
 		ArrayList<String> testList = new ArrayList<String>();
 		testList.add("die");
