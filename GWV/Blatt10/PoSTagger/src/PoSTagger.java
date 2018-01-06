@@ -20,16 +20,6 @@ public class PoSTagger {
 	    	e.printStackTrace();
 	    }
 	    System.out.println(posTagger.generateTaggedString(input.get(0),input.size()));
-	    
-		/*
-		ArrayList<String> testList = new ArrayList<String>();
-		testList.add("die");
-		testList.add("Aktie");
-		testList.add("des");
-		testList.add("Todes");
-		System.out.println(posTagger.generateTaggedString(testList.get(0),testList.size()));
-		*/
-		// LESE SATZ AUS COMMANDLINE AUS
 	}
 	
 	public void learnPredicitonsFromFile() {
