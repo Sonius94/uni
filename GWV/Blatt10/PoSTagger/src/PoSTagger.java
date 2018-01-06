@@ -1,6 +1,5 @@
 import java.net.*;
 import java.io.*;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -9,15 +8,51 @@ public class PoSTagger {
 	Hashtable<String, String> tagForWords = new Hashtable<String,String>();
 	static final String filename = "hdt-1-10000-train.tags";
 	
-	// private String sentence = "";
-	// private String lastWord = "";
-	
-	
 	public static void main(String[] args) {
 		PoSTagger posTagger = new PoSTagger();
 		posTagger.learnPredicitons();
-		System.out.println("");
+		/*
+		ArrayList<String> testList = new ArrayList<String>();
+		testList.add("die");
+		testList.add("Aktie");
+		testList.add("des");
+		testList.add("Todes");
+		System.out.println(posTagger.generateTaggedString(testList));
+		*/
 		// LESE SATZ AUS COMMANDLINE AUS
+	}
+	
+	public void learnPredicitons() {
+		try (BufferedReader br = getReader()) {
+			ArrayList<String> sentence = new ArrayList<>();
+			for(String line; (line = br.readLine()) != null; ) {
+		        if (line.length() == 0) {
+		        		trainMarkov(sentence);
+		        		sentence = new ArrayList<>();
+		        } else {
+		        		sentence.add(line);
+		        }
+		    }
+		} catch (IOException e) {
+			System.out.println(e);
+		}   
+	}
+	
+	public String generateTaggedString(ArrayList<String> stringList) {
+		StringBuilder result = new StringBuilder();
+		String currentTag = "";
+		for (int i = 0; i < stringList.size(); i++) {
+			result.append(stringList.get(i));
+			result.append("\\");
+			if (i == 0) {
+				currentTag = tagForWords.get(stringList.get(i));
+			} else {
+				currentTag = predictNextTag(currentTag); // get Tag with highest prediction
+			}
+			result.append(currentTag); 
+			result.append(" ");
+		}
+		return result.toString();
 	}
 	
 	public void trainMarkov(ArrayList<String> sentence) {
@@ -39,22 +74,6 @@ public class PoSTagger {
 		}
 	}
 	
-	public void learnPredicitons() {
-		try (BufferedReader br = getReader()) {
-			ArrayList<String> sentence = new ArrayList<>();
-			for(String line; (line = br.readLine()) != null; ) {
-		        if (line.length() == 0) {
-		        		trainMarkov(sentence);
-		        		sentence = new ArrayList<>();
-		        } else {
-		        		sentence.add(line);
-		        }
-		    }
-		} catch (IOException e) {
-			System.out.println(e);
-		}   
-	}
-	
 	private BufferedReader getReader() throws IOException {
 		URL path = PoSTagger.class.getResource(filename);
 		File file = new File(path.getFile());
@@ -70,39 +89,15 @@ public class PoSTagger {
 		tagPredicts.put(key, followerTags);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	public void generateSentence(String startWord, int sentenceLenght) {
-		lastWord = startWord;
-		for (int i = 0; i < sentenceLenght; i++) {
-			addNextWord();
-		}
-		System.out.println(sentence);
-	}
-	
-	public void generateRandomSentence() {
-		String randomStart = getRandomStartWord();
-		int randomNum = ThreadLocalRandom.current().nextInt(10, 15);
-		generateSentence(randomStart,randomNum);
-	}
-	
-	private String predictNextWord(String lastWord) {
-		ArrayList<String> possibleWords = tagPredicts.get(lastWord);
+	private String predictNextTag(String lastTag) {
+		ArrayList<String> possibleTags = tagPredicts.get(lastTag);
 		Map<String, Integer> map = new HashMap<String, Integer>();
 
-		for(int i = 0; i < possibleWords.size(); i++){
-		   if(map.get(possibleWords.get(i)) == null){
-		      map.put(possibleWords.get(i),1);
+		for(int i = 0; i < possibleTags.size(); i++){
+		   if(map.get(possibleTags.get(i)) == null){
+		      map.put(possibleTags.get(i),1);
 		   }else{
-		      map.put(possibleWords.get(i), map.get(possibleWords.get(i)) + 1);
+		      map.put(possibleTags.get(i), map.get(possibleTags.get(i)) + 1);
 		   }
 		}
 		int largest = 0;
@@ -117,70 +112,4 @@ public class PoSTagger {
 		}
 		return stringOfLargest;
 	}
-	
-	private String getStartWord(String lastWord) {
-		int sum_of_probs = 0;
-		if (tagPredicts.containsKey(lastWord)) {
-			ArrayList<String> possibleWords = tagPredicts.get(lastWord);
-			Hashtable<String, Integer> wordPredicitions = getPredicitonValues(possibleWords);
-			int border = getTotalCount(wordPredicitions);
-			int r = ThreadLocalRandom.current().nextInt(0, border);
-			
-			Set<String> keys = wordPredicitions.keySet();
-			Iterator<String> itr = keys.iterator();
-			
-			String str = "";
-			while (itr.hasNext()) { 
-			     str = itr.next();
-			     sum_of_probs += wordPredicitions.get(str);
-			     if (sum_of_probs > r) {
-		   	         return str;
-		   	     }
-			 }
-			System.out.println(sum_of_probs);
-			return str;
-		}
-		return null;
-	}
-	
-	private String getRandomStartWord() {
-		return getStartWord(startToken);
-	}
-	
-	// TODO Sehr viel unnötige Berechnungen, muss optimiert werden
-	private Hashtable<String, Integer> getPredicitonValues(ArrayList<String> words) {
-		Hashtable<String, Integer> returnValue = new Hashtable<String, Integer>();
-		for (int i = 0; i < words.size(); i++) {
-			String word = words.get(i);
-			int count = 0;
-			for (int s = 0; s < words.size(); s++) { 
-				if (word == words.get(s)) {
-					count++;
-				}
-			}
-			returnValue.put(word, count);
-		}
-		return returnValue;
-	}
-	
-	private void addNextWord() {
-		if (lastWord == null) {
-			sentence += ". ";
-			//lastWord = getRandomStartWord();
-		}
-		sentence += " " + lastWord;
-		lastWord = predictNextWord(lastWord);
-	}
-	
-	private int getTotalCount(Hashtable<String, Integer> words) {
-		int totalCount = 0;
-		Set<String> keys = words.keySet();
-		Iterator<String> itr = keys.iterator();
-		while (itr.hasNext()) { 
-		     String str = itr.next();
-		     totalCount += words.get(str);
-		 }
-		return totalCount;
-	}
-	*/
 }
