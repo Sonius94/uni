@@ -143,6 +143,7 @@ public class PoSTagger {
 	}
 	
 	private ArrayList<String> getCmdInput() throws IOException {
+		System.out.println("Bitte Wort für Wort - jeweils mit [Enter] getrennt - eingeben. Doppelt [Enter] führt zum Satzende.");
 		scan = new Scanner(System.in);
         ArrayList<String> lines = new ArrayList<String>();
         String s;
