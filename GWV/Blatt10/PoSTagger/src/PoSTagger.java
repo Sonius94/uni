@@ -64,6 +64,7 @@ public class PoSTagger {
 			e.printStackTrace();
 		}
 		trainMarkov(br);
+		br = new ArrayList<>();
 	}
 	
 	/*
