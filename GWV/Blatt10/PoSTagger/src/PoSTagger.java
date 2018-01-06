@@ -5,6 +5,7 @@ import java.util.Map.Entry;
 
 public class PoSTagger {
 	Hashtable<String, ArrayList<String>> tagPredicts = new Hashtable<String,ArrayList<String>>();
+	Hashtable<String, ArrayList<String>> wordPredicts = new Hashtable<String,ArrayList<String>>();
 	Hashtable<String, String> tagForWords = new Hashtable<String,String>();
 	static final String filename = "hdt-1-10000-train.tags";
 	
@@ -17,7 +18,7 @@ public class PoSTagger {
 		testList.add("Aktie");
 		testList.add("des");
 		testList.add("Todes");
-		System.out.println(posTagger.generateTaggedString(testList));
+		System.out.println(posTagger.generateTaggedString(testList.get(0),testList.size()));
 		*/
 		// LESE SATZ AUS COMMANDLINE AUS
 	}
@@ -38,19 +39,26 @@ public class PoSTagger {
 		}   
 	}
 	
-	public String generateTaggedString(ArrayList<String> stringList) {
+	/*
+	 * Es wird jeweils der Tag, der am häufigsten auf einen Tag folgt wieder gegeben.
+	 * Es wird jeweils das Wort für einen Tag wieder gegeben, welches am häufigsten diesem zugeordnet ist.
+	 */
+	public String generateTaggedString(String startString, int sentenceLength) {
 		StringBuilder result = new StringBuilder();
-		String currentTag = "";
-		for (int i = 0; i < stringList.size(); i++) {
-			result.append(stringList.get(i));
+		String currentTag = tagForWords.get(startString);
+		String currentWord = startString;
+		for (int i = 0; i < sentenceLength; i++) {
+			// Füge Wort + Tag hinzu hinzu
+			result.append(currentWord);
 			result.append("\\");
-			if (i == 0) {
-				currentTag = tagForWords.get(stringList.get(i));
-			} else {
-				currentTag = predictNextTag(currentTag); // get Tag with highest prediction
-			}
 			result.append(currentTag); 
 			result.append(" ");
+			
+			// Berechne einen möglichen kommenden Tag
+			currentTag = predictNextTag(currentTag);
+			// Berechne das Wort, das möglicherweise kommen kann, abhängig vom Tag
+			currentWord = predictNextWord(currentTag);
+			
 		}
 		return result.toString();
 	}
@@ -60,13 +68,16 @@ public class PoSTagger {
 			String word = sentence.get(i).split("\t")[0];
 			String tag = sentence.get(i).split("\t")[1];
 			saveTagForWord(word, tag);
+			addWordToTag(tag,word);
 			if (i != sentence.size()-1 ) {
 				String followingTag = sentence.get(i+1).split("\t")[1];
 				addTagToToken(followingTag,tag);
 			}
 		}
 	}
-	
+	/*
+	 * To have a start List. The first word needs to get a tag
+	 */
 	private void saveTagForWord(String word, String tag) {
 		String tagForWord = tagForWords.get(word);
 		if (tagForWord == null) {
@@ -74,12 +85,21 @@ public class PoSTagger {
 		}
 	}
 	
-	private BufferedReader getReader() throws IOException {
-		URL path = PoSTagger.class.getResource(filename);
-		File file = new File(path.getFile());
-		return new BufferedReader(new FileReader(file));
+	/*
+	 * To predict which word will be a output for a tag
+	 */
+	private void addWordToTag(String tag, String word) {
+		ArrayList<String> wordsForTag = wordPredicts.get(tag);
+		if (wordsForTag == null) {
+			wordsForTag = new ArrayList<String>();
+		}
+		wordsForTag.add(word);
+		wordPredicts.put(tag, wordsForTag);
 	}
 	
+	/*
+	 * To predict what tag will follow on another tag.
+	 */
 	private void addTagToToken(String extraValue, String key) {
 		ArrayList<String> followerTags = tagPredicts.get(key);
 		if (followerTags == null) {
@@ -87,6 +107,12 @@ public class PoSTagger {
 		}
 		followerTags.add(extraValue);
 		tagPredicts.put(key, followerTags);
+	}
+	
+	private BufferedReader getReader() throws IOException {
+		URL path = PoSTagger.class.getResource(filename);
+		File file = new File(path.getFile());
+		return new BufferedReader(new FileReader(file));
 	}
 	
 	private String predictNextTag(String lastTag) {
@@ -98,6 +124,30 @@ public class PoSTagger {
 		      map.put(possibleTags.get(i),1);
 		   }else{
 		      map.put(possibleTags.get(i), map.get(possibleTags.get(i)) + 1);
+		   }
+		}
+		int largest = 0;
+		String stringOfLargest = null;
+		for (Entry<String, Integer> entry : map.entrySet()) {
+		   String key = entry.getKey();
+		   int value = entry.getValue();
+		   if( value > largest){
+		      largest = value;
+		      stringOfLargest = key;
+		   }
+		}
+		return stringOfLargest;
+	}
+	
+	private String predictNextWord(String currentTag) {
+		ArrayList<String> possibleWordsForTag = wordPredicts.get(currentTag);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+
+		for(int i = 0; i < possibleWordsForTag.size(); i++){
+		   if(map.get(possibleWordsForTag.get(i)) == null){
+		      map.put(possibleWordsForTag.get(i),1);
+		   }else{
+		      map.put(possibleWordsForTag.get(i), map.get(possibleWordsForTag.get(i)) + 1);
 		   }
 		}
 		int largest = 0;
