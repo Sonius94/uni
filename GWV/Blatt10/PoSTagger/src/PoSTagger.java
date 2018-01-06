@@ -21,7 +21,13 @@ public class PoSTagger {
 	    		posTagger.learnPredicitonsFromFile();
 	            break;
 	    	case 2:
-	            posTagger.learnPredicitonsFromInput();
+	    		ArrayList<String> input = null;
+	    		try {
+	    			input = posTagger.getCmdInput();
+	    		} catch (IOException e) {
+	    			e.printStackTrace();
+	    		}
+	    		System.out.println(posTagger.generateTaggedString(input.get(0),input.size()));
 	            break;
 	    	case 0:
 	            break;
@@ -53,18 +59,6 @@ public class PoSTagger {
 		} catch (IOException e) {
 			System.out.println(e);
 		}   
-	}
-	
-	public void learnPredicitonsFromInput() {
-		ArrayList<String> br = null;
-		try {
-			br = getCmdInput();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		trainMarkov(br);
-		br = new ArrayList<>();
 	}
 	
 	/*
