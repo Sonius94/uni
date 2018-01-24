@@ -10,9 +10,16 @@ public class Willikins {
 		wilikins.solveBruteForce(persons,relations);
 	}
 	
+	
+	/*
+	 * Der Brute-Force-Algorithmus für Aufgabenteil 2
+	 * Jede Permutation der ArrayList an Personen wird untersucht, falls eine Permutation
+	 * besser als die bisherige beste Seatingorder ist, wird sie als die neue beste festgesetzt
+	 */
 	public void solveBruteForce(ArrayList<String> persons, Hashtable<String,Integer> relations) {
 		ArrayList<String> seatOrder = persons;
 		ArrayList<ArrayList<String>> permutations = generatePerm(persons);
+		//Setze das Gesamtrating auf den schlechtesten Wert (Anzahl der Personen * -4)
 		int totalRating = permutations.size()*(-4);
 		for(int i = 0; i<permutations.size();i++) {
 			int rating = getRating(permutations.get(i),relations);
@@ -26,19 +33,25 @@ public class Willikins {
 		System.out.println("Optimum:");
 		System.out.println(seatOrder);
 		System.out.println(totalRating);
-		// Whatto do if relation not found
+		// What to do if relation not found
 	}
+	
 	
 	public void solveAndGenerate(ArrayList<String> persons) {
 		// generiere Relations
-		// Whatto do if relation not found
+		// What to do if relation not found
 	}
+	
 	
 	public void solveWithSavedRelations(ArrayList<String> persons) {
 		// Nimm die gespeicherte
-		// Whatto do if relation not found
+		// What to do if relation not found
 	}
 	
+	
+	/*
+	 * Momentan die fest gespeicherte Liste für sämtliche Tests
+	 */
 	public ArrayList<String> generateFixedPersonList() {
 		ArrayList<String> persons = new ArrayList<String>();
 		persons.add("Emil");
@@ -47,6 +60,8 @@ public class Willikins {
 		persons.add("Kerstin");
 		return persons;
 	}
+	
+	
 	/*
 	public Hashtable<String,Integer> generateFixedRatingList() {
 		Hashtable<String,Integer> ht = new Hashtable<String,Integer>();
@@ -66,6 +81,12 @@ public class Willikins {
 		return ht;
 	}*/
 	
+	
+	/*
+	 * Erstellt für jede Person in der übergebenen ArrayList ein Relationship-Rating 
+	 * zwischen -4 und 4 in einer HashTable, in der jede Relationship mit dem Key
+	 * NamePerson1NamePerson2 gespeichert wird
+	 */
 	public Hashtable<String,Integer> generateFixedRatingList(ArrayList<String> names) {
 		Hashtable<String,Integer> ratings = new Hashtable<String,Integer>();
 		for (String name : names) {
@@ -84,7 +105,10 @@ public class Willikins {
 	}
 	
 	
-	
+	/*
+	 * Berechnet für die übergebene Reihenfolge am Tisch mit der Hashtable den Relationship
+	 * Gesamtwert (sämtliche Ratings der benachbarten Personen addiert)
+	 */
 	public int getRating(ArrayList<String> seatOrder,Hashtable<String,Integer> ratings) {
 		int rating = 0;
 		for(int i = 0; i<seatOrder.size();i++) {
@@ -101,6 +125,11 @@ public class Willikins {
 		return rating;
 	}
 	
+	
+	/*
+	 * Generiert für die übergebene ArrayList an Personen sämtliche Permutationen und gibt diese
+	 * zusammengefasst in einer ArrayList wieder zurück
+	 */
 	 public ArrayList<ArrayList<String>> generatePerm(ArrayList<String> original) {
 	      if (original.size() == 0) { 
 	    	  ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
