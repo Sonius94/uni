@@ -3,10 +3,19 @@ import java.util.Hashtable;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Willikins {
+	PrintService printer;
+	
+	public Willikins() {
+		printer = new PrintService();
+	}
+	
 	public static void main(String[] args) {
 		Willikins wilikins = new Willikins();
+		// generate / get person List
 		ArrayList<String> persons = wilikins.generateFixedPersonList();
+		// generate / get relations
 		Hashtable<String,Integer> relations = wilikins.generateFixedRatingList(persons);
+		// use a solving algorithm
 		wilikins.solveBruteForce(persons,relations);
 	}
 	
@@ -17,7 +26,7 @@ public class Willikins {
 	 */
 	public void solveBruteForce(ArrayList<String> persons, Hashtable<String,Integer> relations) {
 		ArrayList<String> seatOrder = new ArrayList<String>();
-		ArrayList<ArrayList<String>> permutations = generatePerm(persons);
+		ArrayList<ArrayList<String>> permutations = new Permuter().generatePerm(persons);
 		//Setze das Gesamtrating auf den schlechtesten Wert (Anzahl der Personen * -4)
 		int highestRating = permutations.size()*(-4);
 		for(int i = 0; i<permutations.size();i++) {
@@ -27,9 +36,7 @@ public class Willikins {
 				seatOrder = permutations.get(i);
 			}
 		}
-		System.out.println("Optimum:");
-		System.out.println(seatOrder);
-		System.out.println(highestRating);
+		printer.printOptimum(seatOrder, highestRating);
 	}
 	
 	
@@ -41,20 +48,6 @@ public class Willikins {
 	public void solveWithSavedRelations(ArrayList<String> persons) {
 		// Nimm die gespeicherte
 	}
-	
-	
-	/*
-	 * Momentan die fest gespeicherte Liste f�r s�mtliche Tests
-	 */
-	public ArrayList<String> generateFixedPersonList() {
-		ArrayList<String> persons = new ArrayList<String>();
-		persons.add("Emil");
-		persons.add("Anton");
-		persons.add("Hans");
-		persons.add("Kerstin");
-		return persons;
-	}
-	
 	
 	/*
 	public Hashtable<String,Integer> generateFixedRatingList() {
@@ -75,6 +68,18 @@ public class Willikins {
 		return ht;
 	}*/
 	
+	/*
+	 * Momentan die fest gespeicherte Liste f�r s�mtliche Tests
+	 */
+	public ArrayList<String> generateFixedPersonList() {
+		ArrayList<String> persons = new ArrayList<String>();
+		persons.add("Emil");
+		persons.add("Anton");
+		persons.add("Hans");
+		persons.add("Kerstin");
+		return persons;
+	}
+	
 	
 	/*
 	 * Erstellt f�r jede Person in der �bergebenen ArrayList ein Relationship-Rating 
@@ -87,7 +92,7 @@ public class Willikins {
 			for (String secondName : names) {
 				String combName = name + secondName;
 				String combNameReverse = secondName + name;
-				if (ratings.get(combName) == null)  {
+				if (ratings.get(combName) == null && name != secondName)  {
 					int randomNum = ThreadLocalRandom.current().nextInt(-4,5);
 					ratings.put(combName, randomNum);
 					ratings.put(combNameReverse, randomNum);
@@ -119,31 +124,4 @@ public class Willikins {
 		// What to do if relation not found, currently 0 back
 		return rating;
 	}
-	
-	
-	/*
-	 * Generiert f�r die �bergebene ArrayList an Personen s�mtliche Permutationen und gibt diese
-	 * zusammengefasst in einer ArrayList wieder zur�ck
-	 */
-	 public ArrayList<ArrayList<String>> generatePerm(ArrayList<String> original) {
-	      if (original.size() == 0) { 
-	    	  ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>();
-	          result.add(new ArrayList<String>());
-	          return result;
-	      }
-
-	      String firstElement = original.remove(0);
-	      ArrayList<ArrayList<String>> returnValue = new ArrayList<ArrayList<String>>();
-	      ArrayList<ArrayList<String>> permutations = generatePerm(original);
-
-	      for (ArrayList<String> smallerPermutated : permutations) {
-	          for (int index=0; index <= smallerPermutated.size(); index++) {
-	        	  ArrayList<String> temp = new ArrayList<String>(smallerPermutated);
-	              temp.add(index, firstElement);
-	              returnValue.add(temp);
-	          }
-	      }
-
-	      return returnValue;
-	  }
 }
