@@ -111,17 +111,25 @@ public class Willikins {
 	public int getRating(ArrayList<String> seatOrder,Hashtable<String,Integer> ratings) {
 		int rating = 0;
 		for(int i = 0; i<seatOrder.size();i++) {
-			String personA = seatOrder.get(i);
-			String personB;
-			if(i < seatOrder.size() - 1) {
-				personB = seatOrder.get(i+1);
-			} else {
-				personB = seatOrder.get(0);
-			}
-			String fullName = personA + personB;
-			rating += ratings.get(fullName);
+			rating += getRating(seatOrder, ratings, i);
 		}
-		// What to do if relation not found, currently 0 back
 		return rating;
+	}
+	
+	/*
+	 * Gibt den Relation-Wert zwischen zwei Personen wieder
+	 * @return das rating für Person i in Beziehung zum nächsten Partner
+	 */
+	private int getRating(ArrayList<String> seatOrder, Hashtable<String,Integer> ratings, int index) {
+		String personA = seatOrder.get(index);
+		String personB;
+		if(index < seatOrder.size() - 1) {
+			personB = seatOrder.get(index+1);
+		} else {
+			personB = seatOrder.get(0);
+		}
+		String fullName = personA + personB;
+		// TODO What to do if relation not found, currently 0 back
+		return ratings.get(fullName);
 	}
 }
