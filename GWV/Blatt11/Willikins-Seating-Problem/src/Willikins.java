@@ -10,47 +10,41 @@ public class Willikins {
 		wilikins.solveBruteForce(persons,relations);
 	}
 	
-	
 	/*
-	 * Der Brute-Force-Algorithmus für Aufgabenteil 2
+	 * Der Brute-Force-Algorithmus fï¿½r Aufgabenteil 2
 	 * Jede Permutation der ArrayList an Personen wird untersucht, falls eine Permutation
 	 * besser als die bisherige beste Seatingorder ist, wird sie als die neue beste festgesetzt
 	 */
 	public void solveBruteForce(ArrayList<String> persons, Hashtable<String,Integer> relations) {
-		ArrayList<String> seatOrder = persons;
+		ArrayList<String> seatOrder = new ArrayList<String>();
 		ArrayList<ArrayList<String>> permutations = generatePerm(persons);
 		//Setze das Gesamtrating auf den schlechtesten Wert (Anzahl der Personen * -4)
-		int totalRating = permutations.size()*(-4);
+		int highestRating = permutations.size()*(-4);
 		for(int i = 0; i<permutations.size();i++) {
-			int rating = getRating(permutations.get(i),relations);
-			System.out.println(permutations.get(i));
-			System.out.println(rating);
-			if (rating > totalRating) {
-				totalRating = rating;
+			int currentRating = getRating(permutations.get(i),relations);
+			if (currentRating > highestRating) {
+				highestRating = currentRating;
 				seatOrder = permutations.get(i);
 			}
 		}
 		System.out.println("Optimum:");
 		System.out.println(seatOrder);
-		System.out.println(totalRating);
-		// What to do if relation not found
+		System.out.println(highestRating);
 	}
 	
 	
 	public void solveAndGenerate(ArrayList<String> persons) {
 		// generiere Relations
-		// What to do if relation not found
 	}
 	
 	
 	public void solveWithSavedRelations(ArrayList<String> persons) {
 		// Nimm die gespeicherte
-		// What to do if relation not found
 	}
 	
 	
 	/*
-	 * Momentan die fest gespeicherte Liste für sämtliche Tests
+	 * Momentan die fest gespeicherte Liste fï¿½r sï¿½mtliche Tests
 	 */
 	public ArrayList<String> generateFixedPersonList() {
 		ArrayList<String> persons = new ArrayList<String>();
@@ -83,7 +77,7 @@ public class Willikins {
 	
 	
 	/*
-	 * Erstellt für jede Person in der übergebenen ArrayList ein Relationship-Rating 
+	 * Erstellt fï¿½r jede Person in der ï¿½bergebenen ArrayList ein Relationship-Rating 
 	 * zwischen -4 und 4 in einer HashTable, in der jede Relationship mit dem Key
 	 * NamePerson1NamePerson2 gespeichert wird
 	 */
@@ -106,8 +100,8 @@ public class Willikins {
 	
 	
 	/*
-	 * Berechnet für die übergebene Reihenfolge am Tisch mit der Hashtable den Relationship
-	 * Gesamtwert (sämtliche Ratings der benachbarten Personen addiert)
+	 * Berechnet fï¿½r die ï¿½bergebene Reihenfolge am Tisch mit der Hashtable den Relationship
+	 * Gesamtwert (sï¿½mtliche Ratings der benachbarten Personen addiert)
 	 */
 	public int getRating(ArrayList<String> seatOrder,Hashtable<String,Integer> ratings) {
 		int rating = 0;
@@ -122,13 +116,14 @@ public class Willikins {
 			String fullName = personA + personB;
 			rating += ratings.get(fullName);
 		}
+		// What to do if relation not found, currently 0 back
 		return rating;
 	}
 	
 	
 	/*
-	 * Generiert für die übergebene ArrayList an Personen sämtliche Permutationen und gibt diese
-	 * zusammengefasst in einer ArrayList wieder zurück
+	 * Generiert fï¿½r die ï¿½bergebene ArrayList an Personen sï¿½mtliche Permutationen und gibt diese
+	 * zusammengefasst in einer ArrayList wieder zurï¿½ck
 	 */
 	 public ArrayList<ArrayList<String>> generatePerm(ArrayList<String> original) {
 	      if (original.size() == 0) { 
