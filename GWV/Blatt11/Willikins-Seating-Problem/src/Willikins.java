@@ -4,20 +4,24 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Willikins {
 	PrintService printer;
+	Permuter permuter;
 	
 	public Willikins() {
 		printer = new PrintService();
+		permuter = new Permuter();
 	}
 	
 	public static void main(String[] args) {
-		Willikins wilikins = new Willikins();
+		Willikins willikins = new Willikins();
 		// generate / get person List
-		ArrayList<String> persons = wilikins.generateFixedPersonList();
+		ArrayList<String> persons = willikins.generateFixedPersonList();
 		// generate / get relations
-		Hashtable<String,Integer> relations = wilikins.generateFixedRatingList(persons);
+		Hashtable<String,Integer> relations = willikins.generateFixedRatingList(persons);
 		// use a solving algorithm
-		wilikins.solveBruteForce(persons,relations);
+		willikins.solveBruteForce(persons,relations);
+		willikins.greedyAscent(persons, relations, willikins.permuter.generateNachbarn(persons));
 	}
+	
 	
 	/*
 	 * Der Brute-Force-Algorithmus fï¿½r Aufgabenteil 2
@@ -26,7 +30,7 @@ public class Willikins {
 	 */
 	public void solveBruteForce(ArrayList<String> persons, Hashtable<String,Integer> relations) {
 		ArrayList<String> seatOrder = new ArrayList<String>();
-		ArrayList<ArrayList<String>> permutations = new Permuter().generatePerm(persons);
+		ArrayList<ArrayList<String>> permutations = permuter.generatePerm(persons);
 		//Setze das Gesamtrating auf den schlechtesten Wert (Anzahl der Personen * -4)
 		int highestRating = permutations.size()*(-4);
 		for(int i = 0; i<permutations.size();i++) {
@@ -36,7 +40,32 @@ public class Willikins {
 				seatOrder = permutations.get(i);
 			}
 		}
-		printer.printOptimum(seatOrder, highestRating);
+		printer.printOptimum(seatOrder, highestRating, "Brute-Force");
+	}
+	
+	
+	public void greedyAscent(ArrayList<String> persons, Hashtable<String,Integer> relations, ArrayList<ArrayList<String>> nachbarn) {
+		ArrayList<String> seatOrder = new ArrayList<String>(persons);
+		ArrayList<ArrayList<String>> permutations = permuter.generateNachbarn(persons);
+		int highestRating = getRating(persons, relations);
+		
+		//Überprüfe Nachbarn auf bessere Ratings und setze diese als neue beste SeatingOrders fest
+		for (int i = 0; i < permutations.size(); i++) {
+			int rating = getRating(permutations.get(i), relations);
+			if (rating > highestRating) {
+				highestRating = rating;
+				seatOrder = new ArrayList<String>(permutations.get(i));
+			}
+		}
+		
+		//Falls keine bessere Order gefunden wurde, beende Algorithmus und printe beste Order
+		if (seatOrder.equals(persons)) {
+			printer.printOptimum(seatOrder, highestRating, "Greedy Ascent");
+		}
+		//Sonst starte Algorithmus mit neuer bester Order und neu berechneten Nachbarn
+		else {
+			greedyAscent(seatOrder, relations, permuter.generateNachbarn(seatOrder));
+		}
 	}
 	
 	
@@ -48,6 +77,7 @@ public class Willikins {
 	public void solveWithSavedRelations(ArrayList<String> persons) {
 		// Nimm die gespeicherte
 	}
+	
 	
 	/*
 	public Hashtable<String,Integer> generateFixedRatingList() {
@@ -68,6 +98,7 @@ public class Willikins {
 		return ht;
 	}*/
 	
+	
 	/*
 	 * Momentan die fest gespeicherte Liste fï¿½r sï¿½mtliche Tests
 	 */
@@ -77,6 +108,15 @@ public class Willikins {
 		persons.add("Anton");
 		persons.add("Hans");
 		persons.add("Kerstin");
+		persons.add("Herbert");
+		persons.add("Erich");
+		persons.add("Brigitta");
+		persons.add("Kai");
+//		persons.add("Julie");
+//		persons.add("Susanne");
+//		persons.add("Ingeburg");
+//		persons.add("Raphael");
+//		persons.add("Leonore");
 		return persons;
 	}
 	
@@ -115,6 +155,7 @@ public class Willikins {
 		}
 		return rating;
 	}
+	
 	
 	/*
 	 * Gibt den Relation-Wert zwischen zwei Personen wieder
