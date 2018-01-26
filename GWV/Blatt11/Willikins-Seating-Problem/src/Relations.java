@@ -3,6 +3,15 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Relations {
 	Hashtable<String,Integer> relations;
+	FileService fs;
+	
+	public Relations(Boolean useSavedData) {
+		relations = new Hashtable<String,Integer>();
+		fs = new FileService();
+		if(useSavedData) {
+			relations = fs.loadRelations();
+		}
+	}
 	
 	public void saveRelation(String firstName, String secondName, int rating) {
 		String combName = firstName + secondName;

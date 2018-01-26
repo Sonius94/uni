@@ -5,10 +5,12 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Willikins {
 	PrintService printer;
 	Permuter permuter;
+	Relations relations;
 	
 	public Willikins() {
 		printer = new PrintService();
 		permuter = new Permuter();
+		relations = new Relations(true);
 	}
 	
 	public static void main(String[] args) {
@@ -49,7 +51,7 @@ public class Willikins {
 		ArrayList<ArrayList<String>> permutations = permuter.generateNachbarn(persons);
 		int highestRating = getRating(persons, relations);
 		
-		//Überprüfe Nachbarn auf bessere Ratings und setze diese als neue beste SeatingOrders fest
+		//ï¿½berprï¿½fe Nachbarn auf bessere Ratings und setze diese als neue beste SeatingOrders fest
 		for (int i = 0; i < permutations.size(); i++) {
 			int rating = getRating(permutations.get(i), relations);
 			if (rating > highestRating) {
