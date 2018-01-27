@@ -73,17 +73,6 @@ public class Willikins {
 		}
 	}
 	
-	
-	public void solveAndGenerate(ArrayList<String> persons) {
-		// generiere Relations
-	}
-	
-	
-	public void solveWithSavedRelations(ArrayList<String> persons) {
-		// Nimm die gespeicherte
-	}
-	
-	
 	/*
 	 * Berechnet f�r die �bergebene Reihenfolge am Tisch mit der Hashtable den Relationship
 	 * Gesamtwert (s�mtliche Ratings der benachbarten Personen addiert)
