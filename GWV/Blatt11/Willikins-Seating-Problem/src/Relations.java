@@ -70,7 +70,6 @@ public class Relations {
 				}
 			}
 		}
-		System.out.println(ratings.toString());
 		return ratings;
 	}
 	
