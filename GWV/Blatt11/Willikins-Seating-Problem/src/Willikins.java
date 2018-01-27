@@ -15,14 +15,26 @@ public class Willikins {
 	
 	public static void main(String[] args) {
 		Willikins willikins = new Willikins();
-		
-		// Fill relations with data
+		willikins.instantiateRelations();
+		willikins.solve();
+	}
+	
+	/*
+	 * Ways to initialise names and ratings
+	 */
+	public void instantiateRelations() {
 		//willikins.generateRandomStart();
-		willikins.startWithNameList();
-		
+		startWithNameList();
+	}
+	
+	/*
+	 * Choose your solving algorithm
+	 */
+	public void solve() {
 		// use a solving algorithm
-		willikins.solveBruteForce(willikins.relations.people,willikins.relations.relations);
-		willikins.greedyAscent(willikins.relations.people, willikins.relations.relations, willikins.permuter.generateNachbarn(willikins.relations.people));
+		solveBruteForce(relations.people,relations.relations);
+		solveBruteForceWithHighCompare(relations.people,relations.relations);
+		greedyAscent(relations.people, relations.relations, permuter.generateNachbarn(relations.people));
 		// greedy with random restart walk
 		// another optimization
 	}
