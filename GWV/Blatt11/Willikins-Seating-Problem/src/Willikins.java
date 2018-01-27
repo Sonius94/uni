@@ -29,14 +29,25 @@ public class Willikins {
 	
 	/*
 	 * Choose your solving algorithm
+	 * time is readed while usage
 	 */
 	public void solve() {
+		long startTime = System.nanoTime();
 		// use a solving algorithm
 		solveBruteForce(relations.people,relations.relations);
+		long bruteTime = System.nanoTime();
 		solveBruteForceWithHighCompare(relations.people,relations.relations);
+		long bruteExtendedTime = System.nanoTime();
 		greedyAscent(relations.people, relations.relations, permuter.generateNachbarn(relations.people));
+		long greedyTime = System.nanoTime();
 		// greedy with random restart walk
 		// another optimization
+		
+
+		// divide by 1000000 to get milliseconds
+		System.out.println(bruteTime - startTime);
+		System.out.println(bruteExtendedTime - bruteTime);
+		System.out.println(greedyTime - bruteExtendedTime);
 	}
 	
 	
