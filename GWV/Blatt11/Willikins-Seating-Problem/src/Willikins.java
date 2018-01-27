@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -7,17 +8,20 @@ public class Willikins {
 	Permuter permuter;
 	Relations relations;
 	
+	
 	public Willikins() {
 		printer = new PrintService();
 		permuter = new Permuter();
 		relations = new Relations();
 	}
 	
+	
 	public static void main(String[] args) {
 		Willikins willikins = new Willikins();
 		willikins.instantiateRelations();
 		willikins.solve();
 	}
+	
 	
 	/*
 	 * Ways to initialise names and ratings
@@ -26,6 +30,7 @@ public class Willikins {
 		//willikins.generateRandomStart();
 		startWithNameList();
 	}
+	
 	
 	/*
 	 * Choose your solving algorithm
@@ -36,11 +41,18 @@ public class Willikins {
 		// use a solving algorithm
 		solveBruteForce(relations.people,relations.relations);
 		long bruteTime = System.nanoTime();
+		
 		solveBruteForceWithHighCompare(relations.people,relations.relations);
 		long bruteExtendedTime = System.nanoTime();
+		
 		greedyAscent(relations.people, relations.relations, permuter.generateNachbarn(relations.people));
 		long greedyTime = System.nanoTime();
+		
 		// greedy with random restart walk
+		// (startingOrder, relations, orderWithHighestRating, numbersOfRandomRestart, numbersOfRandomWalk, numbersOfRandomWalkRemaining)
+		randomizedGreedyAscent(relations.people, relations.relations, relations.people, 1, 1, 1);
+		long randomGreedyTime = System.nanoTime();
+		
 		// another optimization
 		
 
@@ -48,6 +60,7 @@ public class Willikins {
 		System.out.println(bruteTime - startTime);
 		System.out.println(bruteExtendedTime - bruteTime);
 		System.out.println(greedyTime - bruteExtendedTime);
+		System.out.println(randomGreedyTime - greedyTime);
 	}
 	
 	
@@ -72,17 +85,19 @@ public class Willikins {
 	}
 	
 	
+	/*
+	 * Normal Greedy Ascent, without Random Restart and Random Walk
+	 */
 	public void greedyAscent(ArrayList<String> persons, Hashtable<String,Integer> relations, ArrayList<ArrayList<String>> nachbarn) {
 		ArrayList<String> seatOrder = new ArrayList<String>(persons);
-		ArrayList<ArrayList<String>> permutations = permuter.generateNachbarn(persons);
 		int highestRating = getRating(persons, relations);
 		
 		//�berpr�fe Nachbarn auf bessere Ratings und setze diese als neue beste SeatingOrders fest
-		for (int i = 0; i < permutations.size(); i++) {
-			int rating = getRating(permutations.get(i), relations);
+		for (int i = 0; i < nachbarn.size(); i++) {
+			int rating = getRating(nachbarn.get(i), relations);
 			if (rating > highestRating) {
 				highestRating = rating;
-				seatOrder = new ArrayList<String>(permutations.get(i));
+				seatOrder = new ArrayList<String>(nachbarn.get(i));
 			}
 		}
 		
@@ -95,6 +110,59 @@ public class Willikins {
 			greedyAscent(seatOrder, relations, permuter.generateNachbarn(seatOrder));
 		}
 	}
+	
+	
+	/*
+	 * Greedy Ascent with Random Restart and Random Walk
+	 * If the algorithm doesn't find a better seating order in the neighbors 
+	 * of the current order, it uses random walk to maybe find better neighbors 
+	 * after taking a step in the 'wrong' direction. After an amount of 
+	 * random walks (walkValue), it uses random restart to create a whole new 
+	 * order and starts all over again (amount can be modified by restartValue)
+	 */
+	public void randomizedGreedyAscent(ArrayList<String> currentOrder, Hashtable<String,Integer> relations, ArrayList<String> globalBestOrder, int restartValue, int originalWalkValue, int restWalkValue) {
+		ArrayList<String> current = new ArrayList<String>(currentOrder);
+		int currentRating = getRating(current, relations);
+		ArrayList<String> high = new ArrayList<String>(globalBestOrder);
+		int highRating = getRating(high, relations);
+		boolean foundBetterNeighbor = false;
+		ArrayList<ArrayList<String>> nachbarn = permuter.generateNachbarn(current);
+		
+		for (int i = 0; i < nachbarn.size(); i++) {
+			int rating = getRating(nachbarn.get(i), relations);
+			
+			if (rating > highRating) {
+				high = new ArrayList<String>(nachbarn.get(i));
+				highRating = rating;
+			}
+			if (rating > currentRating) {
+				current = new ArrayList<String>(nachbarn.get(i));
+				currentRating = rating;
+				foundBetterNeighbor = true;
+			}
+		}
+		
+		if (foundBetterNeighbor == true) {
+			randomizedGreedyAscent(current, relations, high, restartValue, originalWalkValue, restWalkValue);
+		}
+		else {
+			if (restartValue == 0 && restWalkValue == 0) {
+				printer.printOptimum(high, highRating, "Randomized Greedy Ascent");
+			}
+			else if (restWalkValue != 0) {
+				System.out.println("Random Walk...");
+				int ranInt = ThreadLocalRandom.current().nextInt(0, nachbarn.size() + 1);
+				randomizedGreedyAscent(nachbarn.get(ranInt), relations, high, restartValue, originalWalkValue, restWalkValue - 1);
+			}
+			else if (restartValue != 0) {
+				System.out.println("Random Restart...");
+				ArrayList<String> shuffled = new ArrayList<String>(current);
+				Collections.shuffle(shuffled);
+				randomizedGreedyAscent(shuffled, relations, high, restartValue - 1, originalWalkValue, originalWalkValue);
+			}
+		}
+	}
+	
 	
 	/*
 	 * Der Brute-Force-Algorithmus f�r Aufgabenteil 2
@@ -116,6 +184,7 @@ public class Willikins {
 		printer.printOptimum(seatOrder, highestRating, "Brute-Force");
 	}
 	
+	
 	/*
 	 * Berechnet f�r die �bergebene Reihenfolge am Tisch mit der Hashtable den Relationship
 	 * Gesamtwert (s�mtliche Ratings der benachbarten Personen addiert)
@@ -127,6 +196,7 @@ public class Willikins {
 		}
 		return rating;
 	}
+	
 	
 	/*
 	 * Every Step this function checks if the highest rank can even be beatable
@@ -161,14 +231,16 @@ public class Willikins {
 		return ratings.get(fullName);
 	}
 	
+	
 	/*
-	 * This start ais using a fixed name list in code
+	 * This start is using a fixed name list in code
 	 * the names will all get a random rating
 	 * rating will not be saved to file
 	 */
 	private void generateRandomStart() {
 		relations.generateRandomStart();
 	}
+	
 	
 	/*
 	 * This start uses a list of names
