@@ -21,7 +21,7 @@ public class Willikins {
 		willikins.startWithNameList();
 		
 		// use a solving algorithm
-		//willikins.solveBruteForce(willikins.relations.people,willikins.relations.relations);
+		willikins.solveBruteForce(willikins.relations.people,willikins.relations.relations);
 		willikins.greedyAscent(willikins.relations.people, willikins.relations.relations, willikins.permuter.generateNachbarn(willikins.relations.people));
 		// greedy with random restart walk
 		// another optimization
@@ -74,13 +74,48 @@ public class Willikins {
 	}
 	
 	/*
+	 * Der Brute-Force-Algorithmus f�r Aufgabenteil 2
+	 * Jede Permutation der ArrayList an Personen wird untersucht, falls eine Permutation
+	 * besser als die bisherige beste Seatingorder ist, wird sie als die neue beste festgesetzt
+	 */
+	public void solveBruteForceWithHighCompare(ArrayList<String> persons, Hashtable<String,Integer> relations) {
+		ArrayList<String> seatOrder = new ArrayList<String>();
+		ArrayList<ArrayList<String>> permutations = permuter.generatePerm(persons);
+		//Setze das Gesamtrating auf den schlechtesten Wert (Anzahl der Personen * -4)
+		int highestRating = permutations.size()*(-4);
+		for(int i = 0; i<permutations.size();i++) {
+			int currentRating = getRatingWithHighest(permutations.get(i),relations,highestRating);
+			if (currentRating > highestRating) {
+				highestRating = currentRating;
+				seatOrder = permutations.get(i);
+			}
+		}
+		printer.printOptimum(seatOrder, highestRating, "Brute-Force");
+	}
+	
+	/*
 	 * Berechnet f�r die �bergebene Reihenfolge am Tisch mit der Hashtable den Relationship
 	 * Gesamtwert (s�mtliche Ratings der benachbarten Personen addiert)
 	 */
-	public int getRating(ArrayList<String> seatOrder,Hashtable<String,Integer> ratings) {
+	private int getRating(ArrayList<String> seatOrder,Hashtable<String,Integer> ratings) {
 		int rating = 0;
 		for(int i = 0; i<seatOrder.size();i++) {
 			rating += getRating(seatOrder, ratings, i);
+		}
+		return rating;
+	}
+	
+	/*
+	 * Every Step this function checks if the highest rank can even be beatable
+	 */
+	private int getRatingWithHighest(ArrayList<String> seatOrder,Hashtable<String,Integer> ratings, int currentHightes) {
+		int rating = 0;
+		int iterations = seatOrder.size();
+		for(int i = 0; i<iterations;i++) {
+			rating += getRating(seatOrder, ratings, i);
+			if((rating + (iterations * 4)) < currentHightes) {
+				return rating;
+			}
 		}
 		return rating;
 	}
