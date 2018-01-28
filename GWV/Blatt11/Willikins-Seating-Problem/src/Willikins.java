@@ -227,7 +227,6 @@ public class Willikins {
 			personB = seatOrder.get(0);
 		}
 		String fullName = personA + personB;
-		// TODO What to do if relation not found, currently 0 back
 		return ratings.get(fullName);
 	}
 	
